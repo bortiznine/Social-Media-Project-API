@@ -21,7 +21,7 @@ public class SocialMediaController {
 
     // get a single post
     @GetMapping("/posts/{postId}")
-    public Post getSinglePost() {
+    public Post getSinglePost(@PathVariable Long postId) {
         System.out.println("calling getPost");
         return socialMediaService.getSinglePost();
     }
