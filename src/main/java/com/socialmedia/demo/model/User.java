@@ -16,6 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String username;
 
     @Column(unique = true)
@@ -30,38 +31,12 @@ public class User {
     @JoinColumn(name="profile_id", referencedColumnName="id")
     private UserProfile userProfile;
 
-    // user can have more than one recipe
-    @OneToMany(mappedBy="user")
-    @LazyCollection(LazyCollectionOption.FALSE) // This means that the Recipe.user property holds the logic for mapping this relationship
-    private List<Recipe> recipeList;
-
-    // user can have more than one category
-    @OneToMany(mappedBy="user")
-    @LazyCollection(LazyCollectionOption.FALSE)  // This means that the Category.user property holds the logic for mapping this relationship
-    private List<Category> categoryList;
-
     public UserProfile getUserProfile() {
         return userProfile;
     }
 
     public void setUserProfile(UserProfile userProfile) {
         this.userProfile = userProfile;
-    }
-
-    public List<Recipe> getRecipeList() {
-        return recipeList;
-    }
-
-    public void setRecipeList(List<Recipe> recipeList) {
-        this.recipeList = recipeList;
-    }
-
-    public List<Category> getCategoryList() {
-        return categoryList;
-    }
-
-    public void setCategoryList(List<Category> categoryList) {
-        this.categoryList = categoryList;
     }
 
     public User() {

@@ -19,9 +19,6 @@ public class UserProfile {
     @Column
     private String lastName;
 
-    @Column
-    private String profileDescription;
-
     @JsonIgnore
     @OneToOne(mappedBy = "userProfile")
     private User user;
@@ -29,11 +26,11 @@ public class UserProfile {
     public UserProfile() {
     }
 
-    public UserProfile(Long id, String firstName, String lastName, String profileDescription) {
+    public UserProfile(Long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.profileDescription = profileDescription;
+
     }
 
     public Long getId() {
