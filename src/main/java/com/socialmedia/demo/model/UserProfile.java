@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
 @Entity
 @Table(name="profiles")
 public class UserProfile {
@@ -19,6 +23,9 @@ public class UserProfile {
     @Column
     private String lastName;
 
+    @Column
+    private String about;
+
     @JsonIgnore
     @OneToOne(mappedBy = "userProfile")
     private User user;
@@ -26,11 +33,11 @@ public class UserProfile {
     public UserProfile() {
     }
 
-    public UserProfile(Long id, String firstName, String lastName) {
+    public UserProfile(Long id, String firstName, String lastName, String about) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-
+        this.about= about;
     }
 
     public Long getId() {
@@ -57,12 +64,12 @@ public class UserProfile {
         this.lastName = lastName;
     }
 
-    public String getProfileDescription() {
-        return profileDescription;
+    public String getAbout() {
+        return about;
     }
 
-    public void setProfileDescription(String profileDescription) {
-        this.profileDescription = profileDescription;
+    public void setAbout(String about) {
+        this.about = about;
     }
 
 
@@ -73,7 +80,7 @@ public class UserProfile {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", profileDescription='" + profileDescription + '\'' +
+                ", about='" + about + '\'' +
                 '}';
     }
 }
