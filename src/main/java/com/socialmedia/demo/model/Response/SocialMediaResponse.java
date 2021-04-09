@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="categories")
+@Table(name="Social-Media")
 public class SocialMediaResponse {
     @Id
     @Column
@@ -19,8 +19,8 @@ public class SocialMediaResponse {
     @Column
     private String name;
     @Column
-    private String description;
-    @OneToMany(mappedBy= "category", orphanRemoval = true)
+    private String about;
+    @OneToMany(mappedBy= "social-media", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
 
     //Add Post response class in response package
@@ -59,7 +59,7 @@ public class SocialMediaResponse {
     }
 
     public String getAbout() {
-        return description;
+        return about;
     }
 
     public void setAbout(String about) {
@@ -79,7 +79,7 @@ public class SocialMediaResponse {
         return postList;
     }
 
-    public void setRecipeList(List<Post> postList) {
+    public void setPostList(List<Post> postList) {
         this.postList = postList;
     }
 
