@@ -3,10 +3,8 @@ package com.socialmedia.demo.service;
 import com.socialmedia.demo.exception.InformationExistException;
 import com.socialmedia.demo.exception.InformationNotFoundException;
 import com.socialmedia.demo.model.Post;
-import com.socialmedia.demo.model.SocialMedia;
-import com.socialmedia.demo.repository.SocialMediaRepository;
+import com.socialmedia.demo.repository.PostRepository;
 import com.socialmedia.demo.security.MyUserDetails;
-import com.socialmedia.demo.repository.SocialMediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -18,18 +16,18 @@ import java.util.Optional;
 @Service
 public class SocialMediaService {
 
-    private SocialMediaRepository socialMediaRepository;
+    private PostRepository postRepository;
 
     @Autowired
-    public void setSocialMediaRepository(SocialMediaRepository socialMediaRepository) {
-        this.socialMediaRepository = socialMediaRepository;
+    public void setSocialMediaRepository(PostRepository postRepository) {
+        this.postRepository = postRepository;
     }
 
     public List<Post> getAllPosts() {
         System.out.println("service calling getCategories ==>");
         MyUserDetails userDetails=(MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(userDetails.getUser());
-        List<Post> posts = socialMediaRepository.findByUserId(userDetails.getUser().getId());
+        List<Post> posts = postRepository.findByUserId(userDetails.getUser().getId());
         if (posts.isEmpty()){
             throw new InformationNotFoundException("no posts found for that userID " + userDetails.getUser().getId());
         }
@@ -50,40 +48,40 @@ public class SocialMediaService {
         }
     }
 
-    public Category createCategory(Category categoryObject) {
+    public Post createCategory(Post postObject) {
         System.out.println("service calling createCategory ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findByUserIdAndName(userDetails.getUser().getId(), categoryObject.getName());
-        if (category != null) {
-            throw new InformationExistException("category with name " + category.getName() + " already exists");
+        Post post = postRepository.findByUserIdAndName(userDetails.getUser().getId(), postObject.getName());
+        if (post != null) {
+            throw new InformationExistException("category with name " + post.getName() + " already exists");
         } else {
-            categoryObject.setUser(userDetails.getUser());
-            return categoryRepository.save(categoryObject);
+            postObject.setUser(userDetails.getUser());
+            return postRepository.save(postObject);
         }
     }
 
-    public Category updateCategory(Long categoryId, Category categoryObject) {
+    public Post updateCategory(Long categoryId, Post postObject) {
         System.out.println("service calling updateCategory ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findByIdAndUserId(userDetails.getUser().getId(), categoryId);
-        if (category!=null) {
-            if (categoryObject.getName().equals(category.getName())) {
-                throw new InformationExistException("category with name " + category.getName() + " already exist");
+        Post post = postRepository.findByIdAndUserId(userDetails.getUser().getId(), categoryId);
+        if (post != null) {
+            if (post.getName().equals(postObject.getName())) {
+                throw new InformationExistException("category with name " + post.getName() + " already exist");
             } else {
-                Category updateCategory = categoryRepository.findById(categoryId).get();
-                updateCategory.setName(categoryObject.getName());
-                updateCategory.setDescription(categoryObject.getDescription());
-                return categoryRepository.save(updateCategory);
+                Post updatePost = postRepository.findById(categoryId).get();
+                updatePost.setName(post.getName());
+                updatePost.setDescription(post.getDescription());
+                return postRepository.save(updateCategory);
             }
         } else {
             throw new InformationNotFoundException("category id " + categoryId + " not found");
         }
     }
 
-    public Category deleteCategory(Long categoryId) {
+    public Post deleteCategory(Long categoryId) {
         System.out.println("service calling deleteCategory ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findByIdAndUserId(userDetails.getUser().getId(), categoryId);
+        Post category = categoryRepository.findByIdAndUserId(userDetails.getUser().getId(), categoryId);
         if (category!=null) {
             categoryRepository.deleteById(categoryId);
             return category;
