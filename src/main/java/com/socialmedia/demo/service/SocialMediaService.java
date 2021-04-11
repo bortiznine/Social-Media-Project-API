@@ -6,10 +6,13 @@ import com.socialmedia.demo.model.Post;
 import com.socialmedia.demo.model.Comment;
 import com.socialmedia.demo.repository.PostRepository;
 import com.socialmedia.demo.security.MyUserDetails;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -79,25 +82,29 @@ public class SocialMediaService {
         }
     }
 
-    public Post deleteSinglePost(Long postId) {
+    public ResponseEntity<?> deleteSinglePost(Long postId) {
         System.out.println("service calling deleteSinglePost ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post post = postRepository.findByIdAndUserId(userDetails.getUser().getId(), postId);
         if (post != null) {
             postRepository.deleteById(postId);
-            return post;
+            HashMap<String, String> responseMessage = new HashMap<>();
+            responseMessage.put("status", "post with id: " + postId + " was successfully deleted");
+            return new ResponseEntity<>(responseMessage, HttpStatus.OK);
         } else {
             throw new InformationNotFoundException("post with ID " + postId + " not found!");
         }
     }
 
-    public List<Post> deleteAllPosts() {
+    public ResponseEntity<?> deleteAllPosts() {
         System.out.println("service calling deleteAllPosts ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Post> posts = postRepository.findByUserId(userDetails.getUser().getId());
         if (!posts.isEmpty()) {
             postRepository.deleteAll(posts);
-            return posts;
+            HashMap<String, String> responseMessage = new HashMap<>();
+            responseMessage.put("status", "all posts for user " + userDetails.getUsername() + " successfully deleted");
+            return new ResponseEntity<>(responseMessage, HttpStatus.OK);
         } else {
             throw new InformationNotFoundException("Could not find any posts for user " + userDetails.getUsername());
         }
@@ -117,47 +124,50 @@ public class SocialMediaService {
     }
 
 
-    public List<Recipe> getAllCommentsOnPost(Long categoryId) {
+    public List<Comment> getAllCommentsOnPost(Long postId) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Category category = categoryRepository.findByIdAndUserId(categoryId, userDetails.getUser().getId());
-        if (category!=null) {
-            return category.getRecipeList();
+        Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
+        if (post!=null) {
+            return post.getCommentList();
         }
         else {
-            throw new InformationNotFoundException("category id " + categoryId + " not found");
+            throw new InformationNotFoundException("post with ID " + postId + " not found!");
         }
     }
-//    public Recipe updateCategoryRecipe(Long categoryId, Long recipeId, Recipe recipeObject) {
-//        System.out.println("service calling updateCategoryRecipe==>");
-//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Category category=this.getCategory(categoryId);
-//        recipeObject.setCategory(category);
-//        recipeObject.setUser(userDetails.getUser());
-//        try {
-//            return recipeRepository.save(recipeObject);
-//        } catch (NoSuchElementException e) {
-//            throw new InformationNotFoundException("recipe or category not found");
-//        }
-//    }
-//
-//    public void deleteCategoryRecipe(Long categoryId, Long recipeId) {
-//        System.out.println("service calling deleteCategoryRecipe ==>");
-//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
-//                .getPrincipal();
-//        Category category = categoryRepository.findByIdAndUserId(categoryId, userDetails.getUser().getId());
-//        if (category == null) {
-//            throw new InformationNotFoundException("category with id " + categoryId +
-//                    " not belongs to this user or category does not exist");
-//        }
-//        Optional<Recipe> recipe = recipeRepository.findByCategoryId(
-//                categoryId).stream().filter(p -> p.getId().equals(recipeId)).findFirst();
-//        if (recipe.isEmpty()) {
-//            throw new InformationNotFoundException("recipe with id " + recipeId +
-//                    " not belongs to this user or recipe does not exist");
-//        }
-//        recipeRepository.deleteById(recipe.get().getId());
-//    }
+
+    public Comment editCommentOnPost(Long postId, Long commentId, Comment commentObject) {
+        System.out.println("service calling updateCategoryRecipe==>");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post post = this.getSinglePost(postId);
+        commentObject.setPost(category);
+        commentObject.setUser(userDetails.getUser());
+        try {
+            return commentRepository.save(commentObject);
+        } catch (NoSuchElementException e) {
+            throw new InformationNotFoundException("comment or post not found");
+        }
+    }
+
+    public ResponseEntity<?> deleteCommentOnPost(Long postId, Long commentId) {
+        System.out.println("service calling deleteCategoryRecipe ==>");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
+        if (post == null) {
+            throw new InformationNotFoundException("post with id " + postId +
+                    " does not belongs to this user or post does not exist");
+        }
+        Optional<Comment> comment = commentRepository.findByCategoryId(
+                postId).stream().filter(c -> c.getId().equals(commentId)).findFirst();
+        if (comment.isEmpty()) {
+            throw new InformationNotFoundException("comment with id " + commentId +
+                    " does not belongs to this user or recipe does not exist");
+        }
+        HashMap<String, String> responseMessage = new HashMap<>();
+        responseMessage.put("status", "comment with id: " + commentId + " was successfully deleted");
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    }
 
 }
 

@@ -57,14 +57,14 @@ public class SocialMediaController {
 
     // delete a post
     @DeleteMapping("/posts/{postId}")
-    public Post deleteSinglePost(@PathVariable Long postId) {
+    public ResponseEntity<?> deleteSinglePost(@PathVariable Long postId) {
         System.out.println("calling deletePost");
         return socialMediaService.deleteSinglePost(postId);
     }
 
     // delete all post
     @DeleteMapping("/posts")
-    public List<Post> deleteAllPosts() {
+    public ResponseEntity<?> deleteAllPosts() {
         System.out.println("calling deleteAllPosts");
         return socialMediaService.deleteAllPosts();
     }
@@ -86,9 +86,9 @@ public class SocialMediaController {
 
     // edit a comment on a post
     @PutMapping("/posts/{postId}/comments/{commentId}")
-    public Post editCommentOnPost(@PathVariable Long postId, @PathVariable Long commentId) {
+    public Comment editCommentOnPost(@PathVariable Long postId, @PathVariable Long commentId, Comment comment) {
         System.out.println("calling editCommentOnPost");
-        return socialMediaService.editCommeontOnPost(postId, commentId);
+        return socialMediaService.editCommentOnPost(postId, commentId, comment);
     }
 
     // delete a comment on a post
