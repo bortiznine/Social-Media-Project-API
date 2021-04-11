@@ -2,9 +2,9 @@ package com.socialmedia.demo.service;
 
 import com.socialmedia.demo.exception.InformationExistException;
 import com.socialmedia.demo.exception.InformationNotFoundException;
+import com.socialmedia.demo.model.Post;
 import com.socialmedia.demo.model.SocialMedia;
-import com.socialmedia.demo.repository.CategoryRepository;
-import com.socialmedia.demo.repository.RecipeRepository;
+import com.socialmedia.demo.repository.SocialMediaRepository;
 import com.socialmedia.demo.security.MyUserDetails;
 import com.socialmedia.demo.repository.SocialMediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,38 +17,34 @@ import java.util.Optional;
 
 @Service
 public class SocialMediaService {
+
     private SocialMediaRepository socialMediaRepository;
 
     @Autowired
-    public void setCategoryRepository(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public void setSocialMediaRepository(SocialMediaRepository socialMediaRepository) {
+        this.socialMediaRepository = socialMediaRepository;
     }
 
-    @Autowired
-    public void setRecipeRepository(RecipeRepository recipeRepository) {
-        this.recipeRepository = recipeRepository;
-    }
-
-    public List<Category> getCategories() {
+    public List<Post> getAllPosts() {
         System.out.println("service calling getCategories ==>");
         MyUserDetails userDetails=(MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(userDetails.getUser());
-        List<Category> categories = categoryRepository.findByUserId(userDetails.getUser().getId());
-        if(categories.isEmpty()){
-            throw new InformationNotFoundException("no categories found for that userID " + userDetails.getUser().getId());
+        List<Post> posts = socialMediaRepository.findByUserId(userDetails.getUser().getId());
+        if (posts.isEmpty()){
+            throw new InformationNotFoundException("no posts found for that userID " + userDetails.getUser().getId());
         }
         else{
-            return categories;
+            return posts;
         }
 
     }
 
-    public Category getCategory(Long categoryId) {
+    public Post getSinglePost(Long categoryId) {
         System.out.println("service getCategory ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findByIdAndUserId(categoryId, userDetails.getUser().getId());
+        Post category = postRepository.findByIdAndUserId(categoryId, userDetails.getUser().getId());
         if (category == null) {
-            throw new InformationNotFoundException("category with id " + categoryId + " not found");
+            throw new InformationNotFoundException("category with id " + postId + " not found");
         } else {
             return category;
         }

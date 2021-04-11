@@ -1,4 +1,6 @@
 package com.socialmedia.demo.repository;
 
-public interface SocialMediaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SocialMediaRepository extends JpaRepository<Post, Long> {
 }
