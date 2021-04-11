@@ -79,7 +79,7 @@ public class SocialMediaService {
     }
 
     public Post deleteSinglePost(Long postId) {
-        System.out.println("service calling deletePost ==>");
+        System.out.println("service calling deleteSinglePost ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post post = postRepository.findByIdAndUserId(userDetails.getUser().getId(), postId);
         if (post != null) {
@@ -88,9 +88,19 @@ public class SocialMediaService {
         } else {
             throw new InformationNotFoundException("post with ID " + postId + " not found!");
         }
-
     }
 
+    public List<Post> deleteAllPosts() {
+        System.out.println("service calling deleteAllPosts ==>");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Post> posts = postRepository.findAllByIdAndUserId(userDetails.getUser().getId(), postId);
+        if (!posts.isEmpty()) {
+            postRepository.deleteAll(posts);
+            return posts;
+        } else {
+            throw new InformationNotFoundException("Could not find any posts for u");
+        }
+    }
 
 
 

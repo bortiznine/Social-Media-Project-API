@@ -1,6 +1,8 @@
 package com.socialmedia.demo.controller;
 
 import com.socialmedia.demo.model.Post;
+import com.socialmedia.demo.service.SocialMediaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,6 +11,12 @@ import java.util.List;
 @RequestMapping(path="/api")
 public class SocialMediaController {
 
+    private SocialMediaService socialMediaService;
+
+    @Autowired
+    public void setSocialMediaService(SocialMediaService socialMediaService) {
+        this.socialMediaService = socialMediaService;
+    }
 
     @GetMapping("/helloworld")
     public String helloWorld() {
