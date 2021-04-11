@@ -1,6 +1,7 @@
 package com.socialmedia.demo.controller;
 
 import com.socialmedia.demo.model.Post;
+import com.socialmedia.demo.model.Comment;
 import com.socialmedia.demo.service.SocialMediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,11 +68,18 @@ public class SocialMediaController {
 
 
     // make a comment on a post
-
+    @PostMapping("/posts/{postId}/comments")
+    public Comment commentOnPost(@PathVariable Long postId, @PathVariable Post postObject) {
+        System.out.println("calling commentOnPost");
+        return socialMediaService.commentOnPost(postId, postObject);
+    }
 
     // get all comments on a post
 
 
-    //
+    // edit a comment on a post
+
+
+    // delete a comment on a post
 
 }
