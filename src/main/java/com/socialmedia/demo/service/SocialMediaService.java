@@ -115,7 +115,7 @@ public class SocialMediaService {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         try {
             Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
-            //Setting and casting the datatype to the category for the recipe
+            //Setting and casting the datatype to the post for the comment
             commentObject.setPost(post);
             return commentRepository.save(commentObject);
         } catch (NoSuchElementException e) {
@@ -137,10 +137,10 @@ public class SocialMediaService {
     }
 
     public Comment editCommentOnPost(Long postId, Long commentId, Comment commentObject) {
-        System.out.println("service calling updateCategoryRecipe==>");
+        System.out.println("service calling updatePostComment==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post post = this.getSinglePost(postId);
-        commentObject.setPost(category);
+        commentObject.setPost(post);
         commentObject.setUser(userDetails.getUser());
         try {
             return commentRepository.save(commentObject);
@@ -150,7 +150,7 @@ public class SocialMediaService {
     }
 
     public ResponseEntity<?> deleteCommentOnPost(Long postId, Long commentId) {
-        System.out.println("service calling deleteCategoryRecipe ==>");
+        System.out.println("service calling deletePostComment ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
@@ -158,11 +158,11 @@ public class SocialMediaService {
             throw new InformationNotFoundException("post with id " + postId +
                     " does not belongs to this user or post does not exist");
         }
-        Optional<Comment> comment = commentRepository.findByCategoryId(
+        Optional<Comment> comment = commentRepository.findByPostId(
                 postId).stream().filter(c -> c.getId().equals(commentId)).findFirst();
         if (comment.isEmpty()) {
             throw new InformationNotFoundException("comment with id " + commentId +
-                    " does not belongs to this user or recipe does not exist");
+                    " does not belongs to this user or comment does not exist");
         }
         HashMap<String, String> responseMessage = new HashMap<>();
         responseMessage.put("status", "comment with id: " + commentId + " was successfully deleted");
