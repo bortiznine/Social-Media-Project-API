@@ -24,7 +24,7 @@ public class SocialMediaService {
     }
 
     public List<Post> getAllPosts() {
-        System.out.println("service calling getCategories ==>");
+        System.out.println("service calling getAllPosts ==>");
         MyUserDetails userDetails=(MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(userDetails.getUser());
         List<Post> posts = postRepository.findByUserId(userDetails.getUser().getId());
@@ -37,59 +37,61 @@ public class SocialMediaService {
 
     }
 
-    public Post getSinglePost(Long categoryId) {
-        System.out.println("service getCategory ==>");
+    public Post getSinglePost(Long postId) {
+        System.out.println("service getSinglePost ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post category = postRepository.findByIdAndUserId(categoryId, userDetails.getUser().getId());
-        if (category == null) {
-            throw new InformationNotFoundException("category with id " + postId + " not found");
+        Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
+        if (post == null) {
+            throw new InformationNotFoundException("post with ID " + postId + " not found!");
         } else {
-            return category;
+            return post;
         }
     }
 
-    public Post createCategory(Post postObject) {
-        System.out.println("service calling createCategory ==>");
+    public Post createSinglePost(Post postObject) {
+        System.out.println("service calling createSinglePost ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = postRepository.findByUserIdAndName(userDetails.getUser().getId(), postObject.getName());
+        Post post = postRepository.findByUserIdAndName(userDetails.getUser().getId(), postObject.getTitle());
         if (post != null) {
-            throw new InformationExistException("category with name " + post.getName() + " already exists");
+            throw new InformationExistException("post with name " + post.getTitle() + " already exists");
         } else {
             postObject.setUser(userDetails.getUser());
             return postRepository.save(postObject);
         }
     }
 
-    public Post updateCategory(Long categoryId, Post postObject) {
-        System.out.println("service calling updateCategory ==>");
+    public Post updateSinglePost(Long postId, Post postObject) {
+        System.out.println("service calling updateSinglePost ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = postRepository.findByIdAndUserId(userDetails.getUser().getId(), categoryId);
+        Post post = postRepository.findByIdAndUserId(userDetails.getUser().getId(), postId);
         if (post != null) {
-            if (post.getName().equals(postObject.getName())) {
-                throw new InformationExistException("category with name " + post.getName() + " already exist");
+            if (post.getTitle().equals(postObject.getTitle())) {
+                throw new InformationExistException("post with name " + post.getTitle() + " already exist");
             } else {
-                Post updatePost = postRepository.findById(categoryId).get();
-                updatePost.setName(post.getName());
-                updatePost.setDescription(post.getDescription());
-                return postRepository.save(updateCategory);
+                Post updatePost = postRepository.findById(postId).get();
+                updatePost.setTitle(post.getTitle());
+                updatePost.setContent(post.getContent());
+                return postRepository.save(updatePost);
             }
         } else {
-            throw new InformationNotFoundException("category id " + categoryId + " not found");
+            throw new InformationNotFoundException("post with ID " + postId + " not found!");
         }
     }
 
-    public Post deleteCategory(Long categoryId) {
-        System.out.println("service calling deleteCategory ==>");
+    public Post deleteSinglePost(Long postId) {
+        System.out.println("service calling deletePost ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post category = categoryRepository.findByIdAndUserId(userDetails.getUser().getId(), categoryId);
-        if (category!=null) {
-            categoryRepository.deleteById(categoryId);
-            return category;
+        Post post = postRepository.findByIdAndUserId(userDetails.getUser().getId(), postId);
+        if (post != null) {
+            postRepository.deleteById(postId);
+            return post;
         } else {
-            throw new InformationNotFoundException("category with ID " + categoryId + " not found!");
+            throw new InformationNotFoundException("post with ID " + postId + " not found!");
         }
 
     }
+
+
 
 
     public Recipe createCategoryRecipe(Long categoryId, Recipe recipeObject){

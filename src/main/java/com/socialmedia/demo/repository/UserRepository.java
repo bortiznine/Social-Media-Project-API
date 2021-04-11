@@ -1,7 +1,7 @@
 package com.socialmedia.demo.repository;
 
 import com.socialmedia.demo.model.User;
-import com.socialmedia.demo.model.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

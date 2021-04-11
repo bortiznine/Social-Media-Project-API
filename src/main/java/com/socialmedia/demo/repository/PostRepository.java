@@ -1,7 +1,6 @@
 package com.socialmedia.demo.repository;
 
 import com.socialmedia.demo.model.Post;
-import com.socialmedia.demo.model.SocialMedia;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
