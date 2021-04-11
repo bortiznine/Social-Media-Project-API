@@ -93,18 +93,18 @@ public class SocialMediaService {
     public List<Post> deleteAllPosts() {
         System.out.println("service calling deleteAllPosts ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Post> posts = postRepository.findAllByIdAndUserId(userDetails.getUser().getId(), postId);
+        List<Post> posts = postRepository.findByUserId(userDetails.getUser().getId());
         if (!posts.isEmpty()) {
             postRepository.deleteAll(posts);
             return posts;
         } else {
-            throw new InformationNotFoundException("Could not find any posts for u");
+            throw new InformationNotFoundException("Could not find any posts for user " + userDetails.getUsername());
         }
     }
 
 
 
-    public Recipe createCategoryRecipe(Long categoryId, Recipe recipeObject){
+    public Comment createCategoryRecipe(Long categoryId, Recipe recipeObject){
         System.out.println("service calling createCategoryRecipe =====>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         try{

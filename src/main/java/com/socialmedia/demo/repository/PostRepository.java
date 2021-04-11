@@ -16,5 +16,4 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     //find by user id and category name
     Post findByUserIdAndName(Long userId, String categoryName);
 
-
 }

@@ -34,7 +34,7 @@ public class SocialMediaController {
     @GetMapping("/posts/{postId}")
     public Post getSinglePost(@PathVariable Long postId) {
         System.out.println("calling getPost");
-        return socialMediaService.getSinglePost();
+        return socialMediaService.getSinglePost(postId);
     }
 
     // create a new post
@@ -47,21 +47,31 @@ public class SocialMediaController {
     // update a post
     @PutMapping("/posts/{postId}")
     public Post updateSinglePost(@PathVariable Long postId, @RequestBody Post postObject) {
-        System.out.println("calling updateCategory");
+        System.out.println("calling updateSinglePost");
         return socialMediaService.updateSinglePost(postId, postObject);
     }
 
     // delete a post
     @DeleteMapping("/posts/{postId}")
     public Post deleteSinglePost(@PathVariable Long postId) {
-        System.out.println("calling deleteCategory");
+        System.out.println("calling deletePost");
         return socialMediaService.deleteSinglePost(postId);
     }
 
     // delete all post
     @DeleteMapping("/posts")
-    public Post deleteAllPosts() {
-        System.out.println("calling deleteCategory");
-        return socialMediaService.deleteAllPosts(postId);
+    public List<Post> deleteAllPosts() {
+        System.out.println("calling deleteAllPosts");
+        return socialMediaService.deleteAllPosts();
     }
+
+
+    // make a comment on a post
+
+
+    // get all comments on a post
+
+
+    //
+
 }

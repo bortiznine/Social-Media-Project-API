@@ -40,6 +40,13 @@ private Long id;
     public Post() {
     }
 
+    public Post(Long id, String title, String content, Date date) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.date = date;
+    }
+
     public Long getId() {
         return id;
     }
