@@ -3,6 +3,7 @@ package com.socialmedia.demo.service;
 import com.socialmedia.demo.exception.InformationExistException;
 import com.socialmedia.demo.exception.InformationNotFoundException;
 import com.socialmedia.demo.model.Post;
+import com.socialmedia.demo.model.Comment;
 import com.socialmedia.demo.repository.PostRepository;
 import com.socialmedia.demo.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,22 +103,21 @@ public class SocialMediaService {
         }
     }
 
-
-
-    public Comment createCategoryRecipe(Long categoryId, Recipe recipeObject){
-        System.out.println("service calling createCategoryRecipe =====>");
+    public Comment commentOnPost(Long postId, Comment commentObject) {
+        System.out.println("service calling commentOnPost =====>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        try{
-            Category category = categoryRepository.findByIdAndUserId(categoryId, userDetails.getUser().getId());
+        try {
+            Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
             //Setting and casting the datatype to the category for the recipe
-            recipeObject.setCategory(category);
-            return recipeRepository.save(recipeObject);
-        }catch(NoSuchElementException e){
-            throw new InformationNotFoundException("category with id " + categoryId +  " not found");
+            commentObject.setPost(post);
+            return commentRepository.save(commentObject);
+        } catch (NoSuchElementException e) {
+            throw new InformationNotFoundException("post with ID " + postId + " not found!");
         }
     }
 
-    public List<Recipe> getCategoryRecipe(Long categoryId) {
+
+    public List<Recipe> getAllCommentsOnPost(Long categoryId) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Category category = categoryRepository.findByIdAndUserId(categoryId, userDetails.getUser().getId());
@@ -128,36 +128,36 @@ public class SocialMediaService {
             throw new InformationNotFoundException("category id " + categoryId + " not found");
         }
     }
-    public Recipe updateCategoryRecipe(Long categoryId, Long recipeId, Recipe recipeObject) {
-        System.out.println("service calling updateCategoryRecipe==>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category=this.getCategory(categoryId);
-        recipeObject.setCategory(category);
-        recipeObject.setUser(userDetails.getUser());
-        try {
-            return recipeRepository.save(recipeObject);
-        } catch (NoSuchElementException e) {
-            throw new InformationNotFoundException("recipe or category not found");
-        }
-    }
-
-    public void deleteCategoryRecipe(Long categoryId, Long recipeId) {
-        System.out.println("service calling deleteCategoryRecipe ==>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        Category category = categoryRepository.findByIdAndUserId(categoryId, userDetails.getUser().getId());
-        if (category == null) {
-            throw new InformationNotFoundException("category with id " + categoryId +
-                    " not belongs to this user or category does not exist");
-        }
-        Optional<Recipe> recipe = recipeRepository.findByCategoryId(
-                categoryId).stream().filter(p -> p.getId().equals(recipeId)).findFirst();
-        if (recipe.isEmpty()) {
-            throw new InformationNotFoundException("recipe with id " + recipeId +
-                    " not belongs to this user or recipe does not exist");
-        }
-        recipeRepository.deleteById(recipe.get().getId());
-    }
+//    public Recipe updateCategoryRecipe(Long categoryId, Long recipeId, Recipe recipeObject) {
+//        System.out.println("service calling updateCategoryRecipe==>");
+//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Category category=this.getCategory(categoryId);
+//        recipeObject.setCategory(category);
+//        recipeObject.setUser(userDetails.getUser());
+//        try {
+//            return recipeRepository.save(recipeObject);
+//        } catch (NoSuchElementException e) {
+//            throw new InformationNotFoundException("recipe or category not found");
+//        }
+//    }
+//
+//    public void deleteCategoryRecipe(Long categoryId, Long recipeId) {
+//        System.out.println("service calling deleteCategoryRecipe ==>");
+//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
+//                .getPrincipal();
+//        Category category = categoryRepository.findByIdAndUserId(categoryId, userDetails.getUser().getId());
+//        if (category == null) {
+//            throw new InformationNotFoundException("category with id " + categoryId +
+//                    " not belongs to this user or category does not exist");
+//        }
+//        Optional<Recipe> recipe = recipeRepository.findByCategoryId(
+//                categoryId).stream().filter(p -> p.getId().equals(recipeId)).findFirst();
+//        if (recipe.isEmpty()) {
+//            throw new InformationNotFoundException("recipe with id " + recipeId +
+//                    " not belongs to this user or recipe does not exist");
+//        }
+//        recipeRepository.deleteById(recipe.get().getId());
+//    }
 
 }
 

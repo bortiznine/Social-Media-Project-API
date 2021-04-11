@@ -34,13 +34,13 @@ public class UserController {
         return userService.loginUser(loginRequest);
     }
 
-    @PostMapping("/passwordreset")
-    public User passwordReset(@RequestBody UserService userService)
-    {
-        System.out.println("calling passwordReset");
-        //need to refactor to run method to change password.
-        return userService.passwordReset(userService);
-    }
+//    @PostMapping("/passwordreset")
+//    public User passwordReset(@RequestBody UserService userService)
+//    {
+//        System.out.println("calling passwordReset");
+//        //need to refactor to run method to change password.
+//        return userService.passwordReset(userService);
+//    }
 }
 
 

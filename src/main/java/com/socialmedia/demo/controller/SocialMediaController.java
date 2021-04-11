@@ -3,9 +3,12 @@ package com.socialmedia.demo.controller;
 import com.socialmedia.demo.model.Post;
 import com.socialmedia.demo.model.Comment;
 import com.socialmedia.demo.service.SocialMediaService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -69,17 +72,30 @@ public class SocialMediaController {
 
     // make a comment on a post
     @PostMapping("/posts/{postId}/comments")
-    public Comment commentOnPost(@PathVariable Long postId, @PathVariable Post postObject) {
+    public Comment commentOnPost(@PathVariable Long postId, @PathVariable Comment commentObject) {
         System.out.println("calling commentOnPost");
-        return socialMediaService.commentOnPost(postId, postObject);
+        return socialMediaService.commentOnPost(postId, commentObject);
     }
 
     // get all comments on a post
-
+    @GetMapping("/posts/{postId}/comments")
+    public List<Comment> getAllCommentsOnPost(@PathVariable Long postId) {
+        System.out.println("calling getAllCommentsOnPost");
+        return socialMediaService.getAllCommentsOnPost(postId);
+    }
 
     // edit a comment on a post
-
+    @PutMapping("/posts/{postId}/comments/{commentId}")
+    public Post editCommentOnPost(@PathVariable Long postId, @PathVariable Long commentId) {
+        System.out.println("calling editCommentOnPost");
+        return socialMediaService.editCommeontOnPost(postId, commentId);
+    }
 
     // delete a comment on a post
+    @DeleteMapping("/posts/{postId}/comments/{commentId}")
+    public ResponseEntity<?> deleteCommentOnPost(@PathVariable Long postId, @PathVariable Long commentId) {
+        System.out.println("calling deleteCommentOnPost");
+        return socialMediaService.deleteCommentOnPost(postId, commentId);
+    }
 
 }
