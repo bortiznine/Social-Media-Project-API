@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class SocialMediaService {
@@ -62,6 +59,7 @@ public class SocialMediaService {
             throw new InformationExistException("post with title " + post.getTitle() + " already exists");
         } else {
             postObject.setUser(userDetails.getUser());
+            postObject.setDate(new Date());
             return postRepository.save(postObject);
         }
     }
@@ -119,6 +117,7 @@ public class SocialMediaService {
             Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
             //Setting and casting the datatype to the post for the comment
             commentObject.setPost(post);
+            commentObject.setDate(new Date());
             return commentRepository.save(commentObject);
         } catch (NoSuchElementException e) {
             throw new InformationNotFoundException("post with ID " + postId + " not found!");
@@ -131,7 +130,7 @@ public class SocialMediaService {
 
         Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
         if (post!=null) {
-            return post.getCommentList();
+            return post.getComments();
         }
         else {
             throw new InformationNotFoundException("post with ID " + postId + " not found!");
