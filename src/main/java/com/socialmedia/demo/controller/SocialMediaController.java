@@ -98,4 +98,10 @@ public class SocialMediaController {
         return socialMediaService.deleteCommentOnPost(postId, commentId);
     }
 
+    // delete a comment on a post
+    @DeleteMapping("/posts/{postId}/comments/")
+    public ResponseEntity<?> deleteAllCommentsOnPost(@PathVariable Long postId) {
+        System.out.println("calling deleteAllCommentsOnPost");
+        return socialMediaService.deleteAllCommentsOnPost(postId);
+    }
 }

@@ -155,7 +155,7 @@ public class SocialMediaService {
     }
 
     public ResponseEntity<?> deleteCommentOnPost(Long postId, Long commentId) {
-        System.out.println("service calling deletePostComment ==>");
+        System.out.println("service calling deleteCommentsOnPost ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
@@ -168,12 +168,30 @@ public class SocialMediaService {
         if (comment.isEmpty()) {
             throw new InformationNotFoundException("comment with id " + commentId +
                     " does not belongs to this user or comment does not exist");
+        } else {
+            commentRepository.deleteById(comment.get().getId());
         }
         HashMap<String, String> responseMessage = new HashMap<>();
         responseMessage.put("status", "comment with id: " + commentId + " was successfully deleted");
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
+    public ResponseEntity<?> deleteAllCommentsOnPost(Long postId) {
+        System.out.println("service calling deleteAllCommentsOnPost ==>");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
+        if (post == null) {
+            throw new InformationNotFoundException("post with id " + postId +
+                    " does not belongs to this user or post does not exist");
+        } else {
+            List<Comment> comments = commentRepository.findByPostIdAndUserId(postId, userDetails.getUser().getId());
+            commentRepository.deleteAll(comments);
+        }
+        HashMap<String, String> responseMessage = new HashMap<>();
+        responseMessage.put("status", "all comments on post with id: " + postId + " were successfully deleted");
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    }
 }
 
 
