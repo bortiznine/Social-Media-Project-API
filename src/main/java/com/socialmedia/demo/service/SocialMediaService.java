@@ -123,8 +123,6 @@ public class SocialMediaService {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<Post> post = postRepository.findById(postId);
         if (post.isPresent()) {
-
-            //Setting and casting the datatype to the post for the comment
             commentObject.setPost(post.get());
             commentObject.setDate(new Date());
             commentObject.setUser(userDetails.getUser());
@@ -137,8 +135,6 @@ public class SocialMediaService {
 
 
     public List<Comment> getAllCommentsOnPost(Long postId) {
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         Optional<Post> optionalPost = postRepository.findById(postId);
         if (optionalPost.isPresent()) {
             return optionalPost.get().getComments();
