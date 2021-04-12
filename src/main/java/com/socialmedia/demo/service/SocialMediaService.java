@@ -70,15 +70,14 @@ public class SocialMediaService {
     public Post updateSinglePost(Long postId, Post postObject) {
         System.out.println("service calling updateSinglePost ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = postRepository.findByIdAndUserId(userDetails.getUser().getId(), postId);
+        Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
         if (post != null) {
             if (post.getTitle().equals(postObject.getTitle())) {
                 throw new InformationExistException("post with title " + post.getTitle() + " already exist");
             } else {
-                Post updatePost = postRepository.findById(postId).get();
-                updatePost.setTitle(post.getTitle());
-                updatePost.setContent(post.getContent());
-                return postRepository.save(updatePost);
+                post.setTitle(postObject.getTitle());
+                post.setContent(postObject.getContent());
+                return postRepository.save(post);
             }
         } else {
             throw new InformationNotFoundException("post with ID " + postId + " not found!");

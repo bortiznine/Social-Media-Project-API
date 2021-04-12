@@ -69,7 +69,6 @@ public class SocialMediaController {
         return socialMediaService.deleteAllPosts();
     }
 
-
     // make a comment on a post
     @PostMapping("/posts/{postId}/comments")
     public Comment commentOnPost(@PathVariable Long postId, @RequestBody Comment comment) {
