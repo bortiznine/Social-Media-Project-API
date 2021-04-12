@@ -85,9 +85,9 @@ public class SocialMediaController {
 
     // edit a comment on a post
     @PutMapping("/posts/{postId}/comments/{commentId}")
-    public Comment editCommentOnPost(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody Comment comment) {
+    public Comment editCommentOnPost(@PathVariable Long commentId, @RequestBody Comment comment) {
         System.out.println("calling editCommentOnPost");
-        return socialMediaService.editCommentOnPost(postId, commentId, comment);
+        return socialMediaService.editCommentOnPost(commentId, comment);
     }
 
     // delete a comment on a post

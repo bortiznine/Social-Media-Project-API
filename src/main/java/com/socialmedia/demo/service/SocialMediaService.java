@@ -140,15 +140,15 @@ public class SocialMediaService {
         }
     }
 
-    public Comment editCommentOnPost(Long postId, Long commentId, Comment commentObject) {
+    public Comment editCommentOnPost(Long commentId, Comment commentObject) {
         System.out.println("service calling updatePostComment==>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = this.getSinglePost(postId);
-        commentObject.setPost(post);
-        commentObject.setUser(userDetails.getUser());
-        try {
-            return commentRepository.save(commentObject);
-        } catch (NoSuchElementException e) {
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+        if (optionalComment.isPresent()) {
+            Comment comment = optionalComment.get();
+            comment.setText(commentObject.getText());
+            comment.setDate(new Date());
+            return commentRepository.save(comment);
+        } else {
             throw new InformationNotFoundException("comment or post not found");
         }
     }
