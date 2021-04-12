@@ -85,6 +85,9 @@ public class SocialMediaController {
 
     // edit a comment on a post
     @PutMapping("/posts/{postId}/comments/{commentId}")
+    /** Return to method below if we need to reimplement the post id in SERVICE
+     * @editCommentOnPost
+     */
     public Comment editCommentOnPost(@PathVariable Long commentId, @RequestBody Comment comment) {
         System.out.println("calling editCommentOnPost");
         return socialMediaService.editCommentOnPost(commentId, comment);
