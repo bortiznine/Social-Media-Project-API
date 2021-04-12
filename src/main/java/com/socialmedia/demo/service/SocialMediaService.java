@@ -55,7 +55,7 @@ public class SocialMediaService {
         if (post == null) {
             throw new InformationNotFoundException("post with ID " + postId + " not found!");
         } else {
-            return post;
+            return  post;
         }
     }
 
@@ -66,6 +66,7 @@ public class SocialMediaService {
         if (post != null) {
             throw new InformationExistException("post with title " + post.getTitle() + " already exists");
         } else {
+            postObject.setUsername(userDetails.getUser().getUsername());
             postObject.setUser(userDetails.getUser());
             postObject.setDate(new Date());
             return postRepository.save(postObject);
@@ -120,14 +121,16 @@ public class SocialMediaService {
     public Comment commentOnPost(Long postId, Comment commentObject) {
         System.out.println("service calling commentOnPost =====>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        try {
-            Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
+        Optional<Post> post = postRepository.findById(postId);
+        if (post.isPresent()) {
+
             //Setting and casting the datatype to the post for the comment
-            commentObject.setPost(post);
+            commentObject.setPost(post.get());
             commentObject.setDate(new Date());
             commentObject.setUser(userDetails.getUser());
+            commentObject.setUsername(userDetails.getUser().getUsername());
             return commentRepository.save(commentObject);
-        } catch (NoSuchElementException e) {
+        } else {
             throw new InformationNotFoundException("post with ID " + postId + " not found!");
         }
     }
@@ -136,9 +139,9 @@ public class SocialMediaService {
     public List<Comment> getAllCommentsOnPost(Long postId) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
-        if (post!=null) {
-            return post.getComments();
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        if (optionalPost.isPresent()) {
+            return optionalPost.get().getComments();
         }
         else {
             throw new InformationNotFoundException("post with ID " + postId + " not found!");

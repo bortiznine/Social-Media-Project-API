@@ -18,6 +18,9 @@ public class Post {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 
+    @Column
+    private String username;
+
 @Column
     private String title;
 
@@ -37,14 +40,16 @@ private Long id;
     private List<Comment> comments;
 
 
+
     public Post() {
     }
 
-    public Post(Long id, String title, String content, Date date) {
+    public Post(Long id, String title, String content, Date date, String username) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
+        this.username = username;
     }
 
     public Long getId() {
@@ -95,10 +100,19 @@ private Long id;
         this.comments = comments;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
                 "id=" + id +
+                ", username= "+username+
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", date=" + date +
