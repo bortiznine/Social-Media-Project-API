@@ -18,7 +18,10 @@ import java.util.*;
 @Service
 public class SocialMediaService {
 
+    @Autowired
     private PostRepository postRepository;
+
+    @Autowired
     private CommentRepository commentRepository;
 
     @Autowired
@@ -118,6 +121,7 @@ public class SocialMediaService {
             //Setting and casting the datatype to the post for the comment
             commentObject.setPost(post);
             commentObject.setDate(new Date());
+            commentObject.setUser(userDetails.getUser());
             return commentRepository.save(commentObject);
         } catch (NoSuchElementException e) {
             throw new InformationNotFoundException("post with ID " + postId + " not found!");

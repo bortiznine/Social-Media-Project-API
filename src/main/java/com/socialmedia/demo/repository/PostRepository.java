@@ -13,7 +13,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByUserId(Long userId);
 
     //find by user and category then return the category
-    Post findByIdAndUserId(Long categoryId, Long userId);
+    Post findByIdAndUserId(Long postId, Long userId);
 
     //find by user id and category name
     Post findByUserIdAndTitle(Long userId, String postTitle);

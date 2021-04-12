@@ -72,9 +72,9 @@ public class SocialMediaController {
 
     // make a comment on a post
     @PostMapping("/posts/{postId}/comments")
-    public Comment commentOnPost(@PathVariable Long postId, @PathVariable Comment commentObject) {
+    public Comment commentOnPost(@PathVariable Long postId, @RequestBody Comment comment) {
         System.out.println("calling commentOnPost");
-        return socialMediaService.commentOnPost(postId, commentObject);
+        return socialMediaService.commentOnPost(postId, comment);
     }
 
     // get all comments on a post
@@ -86,7 +86,7 @@ public class SocialMediaController {
 
     // edit a comment on a post
     @PutMapping("/posts/{postId}/comments/{commentId}")
-    public Comment editCommentOnPost(@PathVariable Long postId, @PathVariable Long commentId, Comment comment) {
+    public Comment editCommentOnPost(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody Comment comment) {
         System.out.println("calling editCommentOnPost");
         return socialMediaService.editCommentOnPost(postId, commentId, comment);
     }
