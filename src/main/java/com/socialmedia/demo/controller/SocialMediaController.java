@@ -70,32 +70,32 @@ public class SocialMediaController {
     }
 
 
-    // make a comment on a post
-    @PostMapping("/posts/{postId}/comments")
-    public Comment commentOnPost(@PathVariable Long postId, @PathVariable Comment commentObject) {
-        System.out.println("calling commentOnPost");
-        return socialMediaService.commentOnPost(postId, commentObject);
-    }
-
-    // get all comments on a post
-    @GetMapping("/posts/{postId}/comments")
-    public List<Comment> getAllCommentsOnPost(@PathVariable Long postId) {
-        System.out.println("calling getAllCommentsOnPost");
-        return socialMediaService.getAllCommentsOnPost(postId);
-    }
-
-    // edit a comment on a post
-    @PutMapping("/posts/{postId}/comments/{commentId}")
-    public Comment editCommentOnPost(@PathVariable Long postId, @PathVariable Long commentId, Comment comment) {
-        System.out.println("calling editCommentOnPost");
-        return socialMediaService.editCommentOnPost(postId, commentId, comment);
-    }
-
-    // delete a comment on a post
-    @DeleteMapping("/posts/{postId}/comments/{commentId}")
-    public ResponseEntity<?> deleteCommentOnPost(@PathVariable Long postId, @PathVariable Long commentId) {
-        System.out.println("calling deleteCommentOnPost");
-        return socialMediaService.deleteCommentOnPost(postId, commentId);
-    }
+//    // make a comment on a post
+//    @PostMapping("/posts/{postId}/comments")
+//    public Comment commentOnPost(@PathVariable Long postId, @PathVariable Comment commentObject) {
+//        System.out.println("calling commentOnPost");
+//        return socialMediaService.commentOnPost(postId, commentObject);
+//    }
+//
+//    // get all comments on a post
+//    @GetMapping("/posts/{postId}/comments")
+//    public List<Comment> getAllCommentsOnPost(@PathVariable Long postId) {
+//        System.out.println("calling getAllCommentsOnPost");
+//        return socialMediaService.getAllCommentsOnPost(postId);
+//    }
+//
+//    // edit a comment on a post
+//    @PutMapping("/posts/{postId}/comments/{commentId}")
+//    public Comment editCommentOnPost(@PathVariable Long postId, @PathVariable Long commentId, Comment comment) {
+//        System.out.println("calling editCommentOnPost");
+//        return socialMediaService.editCommentOnPost(postId, commentId, comment);
+//    }
+//
+//    // delete a comment on a post
+//    @DeleteMapping("/posts/{postId}/comments/{commentId}")
+//    public ResponseEntity<?> deleteCommentOnPost(@PathVariable Long postId, @PathVariable Long commentId) {
+//        System.out.println("calling deleteCommentOnPost");
+//        return socialMediaService.deleteCommentOnPost(postId, commentId);
+//    }
 
 }

@@ -55,9 +55,9 @@ public class SocialMediaService {
     public Post createSinglePost(Post postObject) {
         System.out.println("service calling createSinglePost ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = postRepository.findByUserIdAndName(userDetails.getUser().getId(), postObject.getTitle());
+        Post post = postRepository.findByUserIdAndTitle(userDetails.getUser().getId(), postObject.getTitle());
         if (post != null) {
-            throw new InformationExistException("post with name " + post.getTitle() + " already exists");
+            throw new InformationExistException("post with title " + post.getTitle() + " already exists");
         } else {
             postObject.setUser(userDetails.getUser());
             return postRepository.save(postObject);
@@ -70,7 +70,7 @@ public class SocialMediaService {
         Post post = postRepository.findByIdAndUserId(userDetails.getUser().getId(), postId);
         if (post != null) {
             if (post.getTitle().equals(postObject.getTitle())) {
-                throw new InformationExistException("post with name " + post.getTitle() + " already exist");
+                throw new InformationExistException("post with title " + post.getTitle() + " already exist");
             } else {
                 Post updatePost = postRepository.findById(postId).get();
                 updatePost.setTitle(post.getTitle());
@@ -110,64 +110,64 @@ public class SocialMediaService {
         }
     }
 
-    public Comment commentOnPost(Long postId, Comment commentObject) {
-        System.out.println("service calling commentOnPost =====>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        try {
-            Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
-            //Setting and casting the datatype to the post for the comment
-            commentObject.setPost(post);
-            return commentRepository.save(commentObject);
-        } catch (NoSuchElementException e) {
-            throw new InformationNotFoundException("post with ID " + postId + " not found!");
-        }
-    }
-
-
-    public List<Comment> getAllCommentsOnPost(Long postId) {
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
-        if (post!=null) {
-            return post.getCommentList();
-        }
-        else {
-            throw new InformationNotFoundException("post with ID " + postId + " not found!");
-        }
-    }
-
-    public Comment editCommentOnPost(Long postId, Long commentId, Comment commentObject) {
-        System.out.println("service calling updatePostComment==>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = this.getSinglePost(postId);
-        commentObject.setPost(post);
-        commentObject.setUser(userDetails.getUser());
-        try {
-            return commentRepository.save(commentObject);
-        } catch (NoSuchElementException e) {
-            throw new InformationNotFoundException("comment or post not found");
-        }
-    }
-
-    public ResponseEntity<?> deleteCommentOnPost(Long postId, Long commentId) {
-        System.out.println("service calling deletePostComment ==>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
-        if (post == null) {
-            throw new InformationNotFoundException("post with id " + postId +
-                    " does not belongs to this user or post does not exist");
-        }
-        Optional<Comment> comment = commentRepository.findByPostId(
-                postId).stream().filter(c -> c.getId().equals(commentId)).findFirst();
-        if (comment.isEmpty()) {
-            throw new InformationNotFoundException("comment with id " + commentId +
-                    " does not belongs to this user or comment does not exist");
-        }
-        HashMap<String, String> responseMessage = new HashMap<>();
-        responseMessage.put("status", "comment with id: " + commentId + " was successfully deleted");
-        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
-    }
+//    public Comment commentOnPost(Long postId, Comment commentObject) {
+//        System.out.println("service calling commentOnPost =====>");
+//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        try {
+//            Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
+//            //Setting and casting the datatype to the post for the comment
+//            commentObject.setPost(post);
+//            return commentRepository.save(commentObject);
+//        } catch (NoSuchElementException e) {
+//            throw new InformationNotFoundException("post with ID " + postId + " not found!");
+//        }
+//    }
+//
+//
+//    public List<Comment> getAllCommentsOnPost(Long postId) {
+//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+//        Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
+//        if (post!=null) {
+//            return post.getCommentList();
+//        }
+//        else {
+//            throw new InformationNotFoundException("post with ID " + postId + " not found!");
+//        }
+//    }
+//
+//    public Comment editCommentOnPost(Long postId, Long commentId, Comment commentObject) {
+//        System.out.println("service calling updatePostComment==>");
+//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Post post = this.getSinglePost(postId);
+//        commentObject.setPost(post);
+//        commentObject.setUser(userDetails.getUser());
+//        try {
+//            return commentRepository.save(commentObject);
+//        } catch (NoSuchElementException e) {
+//            throw new InformationNotFoundException("comment or post not found");
+//        }
+//    }
+//
+//    public ResponseEntity<?> deleteCommentOnPost(Long postId, Long commentId) {
+//        System.out.println("service calling deletePostComment ==>");
+//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
+//                .getPrincipal();
+//        Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
+//        if (post == null) {
+//            throw new InformationNotFoundException("post with id " + postId +
+//                    " does not belongs to this user or post does not exist");
+//        }
+//        Optional<Comment> comment = commentRepository.findByPostId(
+//                postId).stream().filter(c -> c.getId().equals(commentId)).findFirst();
+//        if (comment.isEmpty()) {
+//            throw new InformationNotFoundException("comment with id " + commentId +
+//                    " does not belongs to this user or comment does not exist");
+//        }
+//        HashMap<String, String> responseMessage = new HashMap<>();
+//        responseMessage.put("status", "comment with id: " + commentId + " was successfully deleted");
+//        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+//    }
 
 }
 

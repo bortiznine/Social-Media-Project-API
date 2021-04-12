@@ -32,9 +32,9 @@ private Long id;
     @JsonIgnore
     private User user;
 
-@OneToMany(mappedBy = "post", orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Comment> commentList;
+//@OneToMany(mappedBy = "post", orphanRemoval = true)
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    private List<Comment> commentList;
 
 
     public Post() {
@@ -87,13 +87,13 @@ private Long id;
         this.user = user;
     }
 
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
-    }
+//    public List<Comment> getCommentList() {
+//        return commentList;
+//    }
+//
+//    public void setCommentList(List<Comment> commentList) {
+//        this.commentList = commentList;
+//    }
 
     @Override
     public String toString() {

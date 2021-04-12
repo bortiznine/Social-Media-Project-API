@@ -10,7 +10,7 @@ We added Post Comment models. Joined two columns for both post and comment to us
 <h2 span style=color:goldenrod>Reasons</h2>
 <p>
 4/11/21:
-TO implement a proper bearer token authentication for our social media database. Also to ensure a secure access thru information to only those with usernames passwords and profiles.
+To implement a proper bearer token authentication for our social media database. Also to ensure a secure access thru information to only those with usernames passwords and profiles.
 </p>
 <br>
 <h2 span style=color:red>What Went Wrong</h2>
@@ -26,7 +26,7 @@ Reorganizing names of classes to unify order of structure for the project. Makin
 </p>
 <br>
 <h2 span style="color: limegreen">What To Follow Up With Next Meet Up</h2>
-<p><
+<p>
 4/11/21:
 Follow up with Suresh and or Marc regarding tomcat embedded issue. Make sure postman routes can be delivered appropriately.Comment entity for model.
-/p>
+</p>
