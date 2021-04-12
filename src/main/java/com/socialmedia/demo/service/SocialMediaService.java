@@ -83,6 +83,7 @@ public class SocialMediaService {
             } else {
                 post.setTitle(postObject.getTitle());
                 post.setContent(postObject.getContent());
+                post.setDate(new Date()); // edit time & date
                 return postRepository.save(post);
             }
         } else {
@@ -150,7 +151,7 @@ public class SocialMediaService {
         if (optionalComment.isPresent()) {
             Comment comment = optionalComment.get();
             comment.setText(commentObject.getText());
-            comment.setDate(new Date());
+            comment.setDate(new Date()); // edit time & date
             return commentRepository.save(comment);
         } else {
             throw new InformationNotFoundException("comment or post not found");
