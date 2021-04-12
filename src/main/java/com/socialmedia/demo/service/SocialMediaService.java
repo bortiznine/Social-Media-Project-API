@@ -163,8 +163,7 @@ public class SocialMediaService {
             throw new InformationNotFoundException("post with id " + postId +
                     " does not belongs to this user or post does not exist");
         }
-        Optional<Comment> comment = commentRepository.findByPostId(
-                postId).stream().filter(c -> c.getId().equals(commentId)).findFirst();
+        Optional<Comment> comment = commentRepository.findByIdAndPostId(commentId, postId);
         if (comment.isEmpty()) {
             throw new InformationNotFoundException("comment with id " + commentId +
                     " does not belongs to this user or comment does not exist");
