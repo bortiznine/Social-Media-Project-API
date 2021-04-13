@@ -204,27 +204,27 @@ public class SocialMediaService {
                     Long likesCount = reactions.getLike();
                     likesCount++;
                     reactions.setLike(likesCount);
-                    return post.get();
-
+                    break;
                  case "laugh":
                     Long laughCount = reactions.getLaugh();
                     laughCount++;
                     reactions.setLaugh(laughCount);
-                    return post.get();
+                    break;
                 case "angry":
                     Long angryCount = reactions.getAngry();
                     angryCount++;
                     reactions.setAngry(angryCount);
-                    return post.get();
+                    break;
                 case "sad":
                     Long sadCount = reactions.getSad();
                     sadCount++;
                     reactions.setSad(sadCount);
-                    return post.get();
+                    break;
                 default:
-                    throw new ReactionInvalidException("User trying to submit a reaction cannot find "+ reactionType+ " reaction");
+                    throw new ReactionInvalidException("User trying to submit a reaction cannot find " + reactionType + " reaction");
             }
-           
+            reactionsRepository.save(reactions);
+           return post.get();
         } else {
             throw new InformationNotFoundException("Post with id " + postId + " not found");
         }
