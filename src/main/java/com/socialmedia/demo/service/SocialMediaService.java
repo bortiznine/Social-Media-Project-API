@@ -4,6 +4,7 @@ import com.socialmedia.demo.exception.InformationExistException;
 import com.socialmedia.demo.exception.InformationNotFoundException;
 import com.socialmedia.demo.model.Post;
 import com.socialmedia.demo.model.Comment;
+import com.socialmedia.demo.model.Reactions;
 import com.socialmedia.demo.repository.CommentRepository;
 import com.socialmedia.demo.repository.PostRepository;
 import com.socialmedia.demo.repository.ReactionsRepository;
@@ -58,6 +59,9 @@ public class SocialMediaService {
         if (post != null) {
             throw new InformationExistException("post with title " + post.getTitle() + " already exists");
         } else {
+            Reactions reactions = new Reactions();
+            reactions.setPost(postObject);
+            postObject.setReactions(reactions);
             postObject.setUsername(userDetails.getUser().getUsername());
             postObject.setUser(userDetails.getUser());
             postObject.setDate(new Date());
@@ -188,16 +192,17 @@ public class SocialMediaService {
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
-    public Post postReactions(String reaction, Long postId) {
+    public Post postReactions(String reactionType, Long postId) {
         Optional<Post> post = postRepository.findById(postId);
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         if (post.isPresent()) {
-            switch (reaction) {
+            switch (reactionType) {
                 case "like":
-                    reaction ="1";
-                            Long Like=Long.parseLong(reaction);
-                    reactionsRepository.findByIdAndPostId(Like,postId).getLike();
+                    Reactions reactions = reactionsRepository.findByPostId(postId);
+                    Long likesCount = reactions.getLike();
+                    likesCount++;
+                    reactions.setLike(likesCount);
                     return post.get();
                     //break;
 //                case "laugh":

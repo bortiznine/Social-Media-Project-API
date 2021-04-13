@@ -112,6 +112,14 @@ private Long id;
         return username;
     }
 
+    public Reactions getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(Reactions reactions) {
+        this.reactions = reactions;
+    }
+
     @Override
     public String toString() {
         return "Post{" +

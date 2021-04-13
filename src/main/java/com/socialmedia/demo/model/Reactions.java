@@ -12,16 +12,16 @@ public class Reactions {
     private Long id;
 
     @Column
-    private Long like;
+    private Long likes = 0L;
 
     @Column
-    private Long laugh;
+    private Long laugh = 0L;
 
     @Column
-    private Long angry;
+    private Long angry = 0L;
 
     @Column
-    private Long sad;
+    private Long sad = 0L;
 
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
@@ -37,9 +37,9 @@ public class Reactions {
     public Reactions() {
     }
 
-    public Reactions(Long id, Long like, Long laugh, Long angry, Long sad) {
+    public Reactions(Long id, Long likes, Long laugh, Long angry, Long sad) {
         this.id = id;
-        this.like = like;
+        this.likes = likes;
         this.laugh = laugh;
         this.angry = angry;
         this.sad = sad;
@@ -55,11 +55,11 @@ public class Reactions {
     }
 
     public Long getLike() {
-        return like;
+        return likes;
     }
 
     public void setLike(Long like) {
-        this.like = like;
+        this.likes = like;
     }
 
     public Long getLaugh() {
@@ -98,7 +98,7 @@ public class Reactions {
     public String toString() {
         return "Reactions{" +
                 "Id=" + id +
-                ", Like=" + like +
+                ", Like=" + likes +
                 ", Laugh=" + laugh +
                 ", Angry=" + angry +
                 ", Sad=" + sad +
