@@ -1,14 +1,12 @@
 package com.socialmedia.demo.controller;
 
 import com.socialmedia.demo.model.Request.LoginRequest;
+import com.socialmedia.demo.model.Request.PasswordRequest;
 import com.socialmedia.demo.model.User;
 import com.socialmedia.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/auth/users")
@@ -34,13 +32,13 @@ public class UserController {
         return userService.loginUser(loginRequest);
     }
 
-//    @PostMapping("/passwordreset")
-//    public User passwordReset(@RequestBody UserService userService)
-//    {
-//        System.out.println("calling passwordReset");
-//        //need to refactor to run method to change password.
-//        return userService.passwordReset(userService);
-//    }
+    @PutMapping("/passwordreset")
+    public ResponseEntity<?> passwordReset(@RequestBody PasswordRequest passwordRequest)
+    {
+        System.out.println("calling passwordReset");
+        //need to refactor to run method to change password.
+        return userService.passwordReset(passwordRequest);
+    }
 }
 
 

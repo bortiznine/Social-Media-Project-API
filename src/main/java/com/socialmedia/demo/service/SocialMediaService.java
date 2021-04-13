@@ -29,19 +29,7 @@ public class SocialMediaService {
         this.postRepository = postRepository;
     }
 
-//    public List<Post> getAllPosts() {
-//        System.out.println("service calling getAllPosts ==>");
-//        MyUserDetails userDetails=(MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        System.out.println(userDetails.getUser());
-//        List<Post> posts = postRepository.findByUserId(userDetails.getUser().getId());
-//        if (posts.isEmpty()){
-//            throw new InformationNotFoundException("no posts found for that userID " + userDetails.getUser().getId());
-//        }
-//        else{
-//            return posts;
-//        }
-//
-//    }
+
 
     public List<Post> getAllPosts() {
         System.out.println("service calling getAllPosts ==>");
