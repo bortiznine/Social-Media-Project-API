@@ -6,6 +6,7 @@ import com.socialmedia.demo.model.Post;
 import com.socialmedia.demo.model.Comment;
 import com.socialmedia.demo.repository.CommentRepository;
 import com.socialmedia.demo.repository.PostRepository;
+import com.socialmedia.demo.repository.ReactionsRepository;
 import com.socialmedia.demo.security.MyUserDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class SocialMediaService {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private ReactionsRepository reactionsRepository;
 
     @Autowired
     public void setSocialMediaRepository(PostRepository postRepository) {
@@ -182,6 +186,32 @@ public class SocialMediaService {
         HashMap<String, String> responseMessage = new HashMap<>();
         responseMessage.put("status", "all comments on post with id: " + postId + " were successfully deleted");
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    }
+
+    public Post postReactions(String reaction, Long postId) {
+        Optional<Post> post = postRepository.findById(postId);
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        if (post.isPresent()) {
+            switch (reaction) {
+                case "like":
+                    reactionsRepository.findByIdAndPostId(postId, reaction).getLike();
+                    break;
+                case "laugh":
+                    // something
+                    break;
+                case "angry":
+                    // something
+                    break;
+                case "sad":
+                    // something
+                    break;
+                default:
+                    // send back message saying didn't choose a reaction
+            }
+        } else {
+            throw new InformationNotFoundException("Post with id " + postId + " not found");
+        }
     }
 }
 

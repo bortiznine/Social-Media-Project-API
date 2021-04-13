@@ -2,6 +2,7 @@ package com.socialmedia.demo.controller;
 
 import com.socialmedia.demo.model.Post;
 import com.socialmedia.demo.model.Comment;
+import com.socialmedia.demo.model.Reactions;
 import com.socialmedia.demo.model.User;
 import com.socialmedia.demo.service.SocialMediaService;
 import org.springframework.http.HttpStatus;
@@ -107,5 +108,11 @@ public class SocialMediaController {
     public ResponseEntity<?> deleteAllCommentsOnPost(@PathVariable Long postId) {
         System.out.println("calling deleteAllCommentsOnPost");
         return socialMediaService.deleteAllCommentsOnPost(postId);
+    }
+
+    @PostMapping("/post/{postId}/reactions/{reaction}")
+    public Post postReactions(@PathVariable String reaction, @PathVariable Long postId){
+        System.out.println("Calling postReaction");
+        return socialMediaService.postReactions(reaction, postId);
     }
 }
