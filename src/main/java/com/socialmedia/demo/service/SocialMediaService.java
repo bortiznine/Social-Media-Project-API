@@ -2,6 +2,7 @@ package com.socialmedia.demo.service;
 
 import com.socialmedia.demo.exception.InformationExistException;
 import com.socialmedia.demo.exception.InformationNotFoundException;
+import com.socialmedia.demo.exception.ReactionInvalidException;
 import com.socialmedia.demo.model.Post;
 import com.socialmedia.demo.model.Comment;
 import com.socialmedia.demo.model.Reactions;
@@ -197,27 +198,33 @@ public class SocialMediaService {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         if (post.isPresent()) {
+            Reactions reactions = reactionsRepository.findByPostId(postId);
             switch (reactionType) {
                 case "like":
-                    Reactions reactions = reactionsRepository.findByPostId(postId);
                     Long likesCount = reactions.getLike();
                     likesCount++;
                     reactions.setLike(likesCount);
                     return post.get();
-                    //break;
-//                case "laugh":
-//                    // something
-//                    break;
-//                case "angry":
-//                    // something
-//                    break;
-//                case "sad":
-//                    // something
-//                    break;
-//                default:
-//                    // send back message saying didn't choose a reaction
+
+                 case "laugh":
+                    Long laughCount = reactions.getLaugh();
+                    laughCount++;
+                    reactions.setLaugh(laughCount);
+                    return post.get();
+                case "angry":
+                    Long angryCount = reactions.getAngry();
+                    angryCount++;
+                    reactions.setAngry(angryCount);
+                    return post.get();
+                case "sad":
+                    Long sadCount = reactions.getSad();
+                    sadCount++;
+                    reactions.setSad(sadCount);
+                    return post.get();
+                default:
+                    throw new ReactionInvalidException("User trying to submit a reaction cannot find "+ reactionType+ " reaction");
             }
-            return post.get();
+           
         } else {
             throw new InformationNotFoundException("Post with id " + postId + " not found");
         }
