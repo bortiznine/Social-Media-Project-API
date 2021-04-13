@@ -10,6 +10,11 @@ Added parameters to make sure Posts Comments and users worked effectively to be 
 Edited api to ensure (ex. user1 cannot affect posts and comments of user2 etc.) to ensure safety and privacy.
 Made all posts public so even non users can see posts, but will be required to have an account to see comments and the sort.
 users can now comment on other users posts but still cannot affect others posts.
+
+4/13/21:
+Early in the session we implemented the password reset. Allowing us to change password for any user. Made a new branch focused on dabbling with front prototype for later build another time.
+Created a whole new repo for the front named SOCAILMEDIAFRONTEND. had posts mvp display for vue localhost. Added Reactions model, repo, and implemented the method in socialmediaservice to allow users to react to any post.
+
 </p>
 <br>
 <h2 span style=color:goldenrod>Reasons</h2>
