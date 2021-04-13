@@ -14,27 +14,26 @@ import java.util.List;
 public class Post {
 
     @Id
-@Column
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
 
-@Column
+    @Column
     private String title;
 
-@Column
+    @Column
     private String content;
 
-@Column
+    @Column
     private Date date;
 
 
 
-@OneToMany(mappedBy = "post", orphanRemoval = true)
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Comment> comments;
 
