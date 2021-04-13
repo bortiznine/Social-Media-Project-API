@@ -24,6 +24,9 @@ To implement a proper bearer token authentication for our social media database.
 
 4/12/21:
 To ensure that a proper social media database can protect other peoples info and posts/comments. thus allowing users to not worry of breach of security.
+
+4/13/21:
+If a user wanted to change a password they can now do so. Made sure to allow users the freedom to react to others posts. Having a test frontend prototype can make viewing more accessible to users.
 </p>
 <br>
 <h2 span style=color:red>What Went Wrong</h2>
