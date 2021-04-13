@@ -195,20 +195,24 @@ public class SocialMediaService {
         if (post.isPresent()) {
             switch (reaction) {
                 case "like":
-                    reactionsRepository.findByIdAndPostId(postId, reaction).getLike();
-                    break;
-                case "laugh":
-                    // something
-                    break;
-                case "angry":
-                    // something
-                    break;
-                case "sad":
-                    // something
-                    break;
-                default:
-                    // send back message saying didn't choose a reaction
+                    reaction ="1";
+                            Long Like=Long.parseLong(reaction);
+                    reactionsRepository.findByIdAndPostId(Like,postId).getLike();
+                    return post.get();
+                    //break;
+//                case "laugh":
+//                    // something
+//                    break;
+//                case "angry":
+//                    // something
+//                    break;
+//                case "sad":
+//                    // something
+//                    break;
+//                default:
+//                    // send back message saying didn't choose a reaction
             }
+            return post.get();
         } else {
             throw new InformationNotFoundException("Post with id " + postId + " not found");
         }
