@@ -9,95 +9,108 @@ import javax.persistence.*;
 public class Reactions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column
-    private Long Like;
+    private Long like;
 
     @Column
-    private Long Laugh;
+    private Long laugh;
 
     @Column
-    private Long Angry;
+    private Long angry;
 
     @Column
-    private Long Sad;
+    private Long sad;
+
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    @JsonIgnore
+//    private User user;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "postId")
     @JsonIgnore
-    private User user;
+    private Post post;
 
 
     public Reactions() {
     }
 
     public Reactions(Long id, Long like, Long laugh, Long angry, Long sad) {
-        Id = id;
-        Like = like;
-        Laugh = laugh;
-        Angry = angry;
-        Sad = sad;
+        this.id = id;
+        this.like = like;
+        this.laugh = laugh;
+        this.angry = angry;
+        this.sad = sad;
 
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public Long getLike() {
-        return Like;
+        return like;
     }
 
     public void setLike(Long like) {
-        Like = like;
+        this.like = like;
     }
 
     public Long getLaugh() {
-        return Laugh;
+        return laugh;
     }
 
     public void setLaugh(Long laugh) {
-        Laugh = laugh;
+        this.laugh = laugh;
     }
 
     public Long getAngry() {
-        return Angry;
+        return angry;
     }
 
     public void setAngry(Long angry) {
-        Angry = angry;
+        this.angry = angry;
     }
 
     public Long getSad() {
-        return Sad;
+        return sad;
     }
 
     public void setSad(Long sad) {
-        Sad = sad;
+       this.sad = sad;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
     @Override
     public String toString() {
         return "Reactions{" +
-                "Id=" + Id +
-                ", Like=" + Like +
-                ", Laugh=" + Laugh +
-                ", Angry=" + Angry +
-                ", Sad=" + Sad +
-                ", user=" + user +
+                "Id=" + id +
+                ", Like=" + like +
+                ", Laugh=" + laugh +
+                ", Angry=" + angry +
+                ", Sad=" + sad +
+//                ", user=" + user +
                 '}';
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 }

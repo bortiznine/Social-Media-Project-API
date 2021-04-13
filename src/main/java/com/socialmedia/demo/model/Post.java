@@ -30,6 +30,10 @@ private Long id;
 @Column
     private Date date;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="reactions_id", referencedColumnName="id")
+    private Reactions reactions;
+
 @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
