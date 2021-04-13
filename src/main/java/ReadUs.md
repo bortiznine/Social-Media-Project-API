@@ -51,6 +51,9 @@ Reorganizing names of classes to unify order of structure for the project. Makin
 
 4/12/21:
 reorganizing the code to ensure that users can only edit their own posts and comments. Make sure no hackers got in. 
+
+4/13/21:
+Figuring out how to not have users react more than once to a post. A solution must be met. Getting password was thought to be challenge as we expected it to be more endearing to get data passed properly but proved to be simple.
 </p>
 <br>
 <h2 span style="color: limegreen">What To Follow Up With Next Meet Up</h2>
