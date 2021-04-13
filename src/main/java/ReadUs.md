@@ -63,4 +63,7 @@ Follow up with Suresh and or Marc regarding tomcat embedded issue. Make sure pos
 
 4/12/21:
 Need to add Reactions and reset password for users. Having those to boot with would make a full-fledged social media project.
+
+4/13/21:
+Check how we can limit reaction amount per user on a given post. Try expanding backend to vue front and meet together to make a running full stack site. Updating branches for FrontEnd and master to allow front end use and to keep backend unaffected.
 </p>
