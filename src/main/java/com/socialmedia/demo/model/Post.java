@@ -18,8 +18,10 @@ public class Post {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 
-    @Column
-    private String username;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
 @Column
     private String title;
@@ -30,10 +32,7 @@ private Long id;
 @Column
     private Date date;
 
-@ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
+
 
 @OneToMany(mappedBy = "post", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -44,12 +43,11 @@ private Long id;
     public Post() {
     }
 
-    public Post(Long id, String title, String content, Date date, String username) {
+    public Post(Long id, String title, String content, Date date) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
-        this.username = username;
     }
 
     public Long getId() {
@@ -100,19 +98,11 @@ private Long id;
         this.comments = comments;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
-    }
 
     @Override
     public String toString() {
         return "Post{" +
                 "id=" + id +
-                ", username= "+username+
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", date=" + date +

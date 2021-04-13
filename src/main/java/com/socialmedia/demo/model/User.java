@@ -1,6 +1,7 @@
 package com.socialmedia.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -11,74 +12,89 @@ import java.util.List;
 @Table(name="users")
 public class User {
 
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private String username;
+        @Id
+        @Column
+        @JsonIgnore
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
 
-    @Column(unique = true)
-    private String emailAddress;
+        @Column
+        private String username;
 
-    @Column
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+        @Column(unique = true)
+        private String emailAddress;
 
-    // one user can have only one profile
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="profile_id", referencedColumnName="id")
-    private UserProfile userProfile;
+        @Column
+        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+        private String password;
 
-    public UserProfile getUserProfile() {
-        return userProfile;
-    }
+        @Column
+        private String profilePicture;
 
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
-    }
+//    // one user can have only one profile
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="profile_id", referencedColumnName="id")
+//    private UserProfile userProfile;
+//
+//    public UserProfile getUserProfile() {
+//        return userProfile;
+//    }
+//
+//    public void setUserProfile(UserProfile userProfile) {
+//        this.userProfile = userProfile;
+//    }
 
-    public User() {
-    }
+        public User() {
+        }
 
-    public User(Long id, String username, String emailAddress, String password) {
-        this.id = id;
-        this.username = username;
-        this.emailAddress = emailAddress;
-        this.password = password;
-    }
+        public User(Long id, String username, String emailAddress, String password, String profilePicture) {
+            this.id = id;
+            this.username = username;
+            this.emailAddress = emailAddress;
+            this.password = password;
+            this.profilePicture = profilePicture;
+        }
 
-    public Long getId() {
-        return id;
-    }
+        public Long getId() {
+            return id;
+        }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+        public void setId(Long id) {
+            this.id = id;
+        }
 
-    public String getUsername() {
-        return username;
-    }
+        public String getUsername() {
+            return username;
+        }
 
-    public void setUsername(String userName) {
-        this.username = userName;
-    }
+        public void setUsername(String userName) {
+            this.username = userName;
+        }
 
-    public String getEmailAddress() {
-        return emailAddress;
-    }
+        public String getEmailAddress() {
+            return emailAddress;
+        }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
+        public void setEmailAddress(String emailAddress) {
+            this.emailAddress = emailAddress;
+        }
 
-    public String getPassword() {
-        return password;
-    }
+        public String getPassword() {
+            return password;
+        }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getProfilePicture() {
+            return profilePicture;
+        }
+
+        public void setProfilePicImageUrl(String profilePicture) {
+            this.profilePicture = profilePicture;
+        }
 
     @Override
     public String toString() {
@@ -86,7 +102,7 @@ public class User {
                 "id=" + id +
                 ", userName='" + username + '\'' +
                 ", emailAddress='" + emailAddress + '\'' +
-                ", password='" + password + '\'' +
+                ", profilePicUrl='" + profilePicture + '\'' +
                 '}';
     }
 }

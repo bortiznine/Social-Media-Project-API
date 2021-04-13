@@ -54,7 +54,6 @@ public class SocialMediaService {
         if (post != null) {
             throw new InformationExistException("post with title " + post.getTitle() + " already exists");
         } else {
-            postObject.setUsername(userDetails.getUser().getUsername());
             postObject.setUser(userDetails.getUser());
             postObject.setDate(new Date());
             return postRepository.save(postObject);
