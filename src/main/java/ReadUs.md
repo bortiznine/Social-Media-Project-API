@@ -38,6 +38,10 @@ Cannot fully run the server as we have been getting (Unable to start embedded to
 Initially Posts and comments were only seen and accessed to the original user. no other posts or comments were able to be displayed to interact with. Posts and comments were not displaying username effectively to the comments or posts shown (we could not know who was the submitter.)
 @requestbody was missing in a method for social-media controller causing us issues to display proper information.
 columns for posts and comments were not organized to be user-friendly.
+
+4/13/21:
+REACTIONS WAS A COMPLICATED OBSERVATION! We spent about 3 hours trying to see how we can properly implement such a system for users to have. It's easy on idea but in execution we stumbled on meeting the right parameters.
+Seeing reactions work but with no restriction is something we would have to address next meet up.
 </p>
 <br>
 <h2 span style="color: goldenrod">Challenges We Faced</h2>
