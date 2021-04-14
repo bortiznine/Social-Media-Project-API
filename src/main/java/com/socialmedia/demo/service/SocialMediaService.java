@@ -201,9 +201,15 @@ public class SocialMediaService {
             Reactions reactions = reactionsRepository.findByPostId(postId);
             switch (reactionType) {
                 case "like":
+
                     Long likesCount = reactions.getLike();
-                    likesCount++;
-                    reactions.setLike(likesCount);
+                    if(likesCount>1){
+                        throw new InformationExistException("reaction of "+ reactionType + " cannot be added as there is another reaction submitted!");
+                    }
+                    else {
+                        likesCount++;
+                        reactions.setLike(likesCount);
+                    }
                     break;
                  case "laugh":
                     Long laughCount = reactions.getLaugh();
