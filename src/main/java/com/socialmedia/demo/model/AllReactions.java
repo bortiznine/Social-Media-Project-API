@@ -22,14 +22,11 @@ public class AllReactions {
     @JoinColumn(name="post_id")
     private Post post;
 
-    @Column
-    private String type;
 
-    public AllReactions(Long id, User user, Post post, String type) {
+    public AllReactions(Long id, User user, Post post) {
         this.id = id;
         this.user = user;
         this.post = post;
-        this.type = type;
     }
 
     public AllReactions() {
@@ -49,14 +46,6 @@ public class AllReactions {
 
     public Post getPost() {
         return post;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
     }
 }
 

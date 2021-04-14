@@ -65,10 +65,8 @@ public class SocialMediaService {
         if (post != null) {
             throw new InformationExistException("post with title " + post.getTitle() + " already exists");
         } else {
-            AllReactions allReactions = new AllReactions();
             Reactions reactions = new Reactions();
             reactions.setPost(postObject);
-            postObject.setAllReactions(allReactions);
             postObject.setReactions(reactions);
             postObject.setUsername(userDetails.getUser().getUsername());
             postObject.setUser(userDetails.getUser());
@@ -206,17 +204,19 @@ public class SocialMediaService {
                 .getPrincipal();
         if (post.isPresent()) {
             Reactions reactions = reactionsRepository.findByPostId(postId);
+            boolean alreadyReacted = allReactionsRepository.existsByUserIdAndPostId(userDetails.getUser().getId(), postId);
+            if (alreadyReacted) {
+                throw new InformationExistException("reaction of "+ reactionType + " cannot be added as there is another reaction submitted!");
+            }
             switch (reactionType) {
                 case "like":
-                    allReactionsRepository.findByPostIdAndUserIdAndType()
                     Long likesCount = reactions.getLike();
-//                    if(likesCount>1){
-//                        throw new InformationExistException("reaction of "+ reactionType + " cannot be added as there is another reaction submitted!");
-//                    }
-//                    else {
-                        likesCount++;
-                        reactions.setLike(likesCount);
-//                    }
+                    likesCount++;
+                    reactions.setLike(likesCount);
+                    AllReactions newAllReactions = new AllReactions();
+                    newAllReactions.setUser(userDetails.getUser());
+                    newAllReactions.setPost(post.get());
+                    allReactionsRepository.save(newAllReactions);
                     break;
                  case "laugh":
                     Long laughCount = reactions.getLaugh();

@@ -23,10 +23,6 @@ public class Comment {
     @Column
     private Date date;
 
-
-
-
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="user_id")
