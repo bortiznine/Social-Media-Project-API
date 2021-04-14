@@ -50,8 +50,6 @@ public class UserService {
 
     public User createUser(User userObject) {
         System.out.println("service calling createUser ==>");
-        //base case: check if user already exist in our system
-        //else create the user
         if (!userRepository.existsByEmailAddress(userObject.getEmailAddress())) {
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
             return userRepository.save(userObject);

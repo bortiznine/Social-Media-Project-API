@@ -1,8 +1,7 @@
 package com.socialmedia.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +12,7 @@ public class User {
 
     @Id
     @Column
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -25,27 +25,31 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @Column
+    private String picture;
+
     // one user can have only one profile
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="profile_id", referencedColumnName="id")
-    private UserProfile userProfile;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="profile_id", referencedColumnName="id")
+//    private UserProfile userProfile;
 
-    public UserProfile getUserProfile() {
-        return userProfile;
-    }
-
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
-    }
+//    public UserProfile getUserProfile() {
+//        return userProfile;
+//    }
+//
+//    public void setUserProfile(UserProfile userProfile) {
+//        this.userProfile = userProfile;
+//    }
 
     public User() {
     }
 
-    public User(Long id, String username, String emailAddress, String password) {
+    public User(Long id, String username, String emailAddress, String password, String profile) {
         this.id = id;
         this.username = username;
         this.emailAddress = emailAddress;
         this.password = password;
+        this.picture = picture;
     }
 
     public Long getId() {
@@ -80,13 +84,21 @@ public class User {
         this.password = password;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String profilePicture) {
+        this.picture = picture;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", userName='" + username + '\'' +
                 ", emailAddress='" + emailAddress + '\'' +
-                ", password='" + password + '\'' +
+                ", profilePicUrl='" + picture + '\'' +
                 '}';
     }
 }
