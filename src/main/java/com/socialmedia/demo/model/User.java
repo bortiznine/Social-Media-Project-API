@@ -16,6 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String username;
 
     @Column(unique = true)
@@ -44,7 +45,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String username, String emailAddress, String password, String profile) {
+    public User(Long id, String username, String emailAddress, String password, String picture) {
         this.id = id;
         this.username = username;
         this.emailAddress = emailAddress;
@@ -88,7 +89,7 @@ public class User {
         return picture;
     }
 
-    public void setPicture(String profilePicture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 

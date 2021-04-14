@@ -68,7 +68,6 @@ public class SocialMediaService {
             ReactionsCount reactionsCount = new ReactionsCount();
             reactionsCount.setPost(postObject);
             postObject.setReactionsCount(reactionsCount);
-            postObject.setUsername(userDetails.getUser().getUsername());
             postObject.setUser(userDetails.getUser());
             postObject.setDate(new Date());
             return postRepository.save(postObject);
@@ -129,7 +128,6 @@ public class SocialMediaService {
             commentObject.setPost(post.get());
             commentObject.setDate(new Date());
             commentObject.setUser(userDetails.getUser());
-            commentObject.setUsername(userDetails.getUser().getUsername());
             return commentRepository.save(commentObject);
         } else {
             throw new InformationNotFoundException("post with ID " + postId + " not found!");
@@ -217,7 +215,7 @@ public class SocialMediaService {
                     reactionsCount.setLike(likesCount);
 
                     break;
-                 case "laugh":
+                case "laugh":
                     Long laughCount = reactionsCount.getLaugh();
                     laughCount++;
                     reactionsCount.setLaugh(laughCount);
@@ -239,7 +237,7 @@ public class SocialMediaService {
             newReactions.setPost(post.get());
             reactionsRepository.save(newReactions);
             reactionsCountRepository.save(reactionsCount);
-           return post.get();
+            return post.get();
         } else {
             throw new InformationNotFoundException("Post with id " + postId + " not found");
         }

@@ -14,19 +14,16 @@ public class Comment {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    private String username;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column
     private String text;
 
     @Column
     private Date date;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
 
     @JsonIgnore
     @ManyToOne
@@ -37,11 +34,10 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Long id, String text, Date date, String username) {
+    public Comment(Long id, String text, Date date) {
         this.id = id;
         this.text = text;
         this.date = date;
-        this.username = username;
     }
 
     public Long getId() {
@@ -84,19 +80,10 @@ public class Comment {
         this.post = post;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
                 ", text='" + text + '\'' +
                 ", date=" + date +
                 ", user=" + user +

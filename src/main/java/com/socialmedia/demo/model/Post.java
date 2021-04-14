@@ -14,20 +14,21 @@ import java.util.List;
 public class Post {
 
     @Id
-@Column
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column
-    private String username;
-
-@Column
     private String title;
 
-@Column
+    @Column
     private String content;
 
-@Column
+    @Column
     private Date date;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -39,26 +40,19 @@ private Long id;
     @JsonIgnore
     private Reactions reactions;
 
-@ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
-
-@OneToMany(mappedBy = "post", orphanRemoval = true)
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Comment> comments;
-
 
 
     public Post() {
     }
 
-    public Post(Long id, String title, String content, Date date, String username) {
+    public Post(Long id, String title, String content, Date date) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
-        this.username = username;
     }
 
     public Long getId() {
@@ -109,14 +103,6 @@ private Long id;
         this.comments = comments;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
     public ReactionsCount getReactionsCount() {
         return reactionsCount;
     }
@@ -138,11 +124,9 @@ private Long id;
     public String toString() {
         return "Post{" +
                 "id=" + id +
-                ", username= "+username+
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", date=" + date +
                 '}';
     }
 }
-//reference back to here if need be delete a getter and or setter for project to work.

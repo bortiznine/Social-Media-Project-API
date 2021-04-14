@@ -52,6 +52,7 @@ public class UserService {
         System.out.println("service calling createUser ==>");
         if (!userRepository.existsByEmailAddress(userObject.getEmailAddress())) {
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
+            userObject.setPicture(userObject.getPicture());
             return userRepository.save(userObject);
         } else {
             throw new InformationExistException("user with email address " + userObject.getEmailAddress() + " already exist");
