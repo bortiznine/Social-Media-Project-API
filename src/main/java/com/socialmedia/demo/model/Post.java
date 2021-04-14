@@ -34,6 +34,11 @@ private Long id;
     @JoinColumn(name="reactions_id", referencedColumnName="id")
     private Reactions reactions;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="all_reactions_id", referencedColumnName="id")
+    @JsonIgnore
+    private AllReactions allReactions;
+
 @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
@@ -118,6 +123,14 @@ private Long id;
 
     public void setReactions(Reactions reactions) {
         this.reactions = reactions;
+    }
+
+    public AllReactions getAllReactions() {
+        return allReactions;
+    }
+
+    public void setAllReactions(AllReactions allReactions) {
+        this.allReactions = allReactions;
     }
 
     @Override
