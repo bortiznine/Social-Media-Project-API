@@ -37,7 +37,7 @@ PUT | /auth/users/passwordreset | PasswordReset passwordResetObject | none|
 </ul>
 
 <h2 span style="color: darkgray">ERD Diagram</h2>
-<img src="https://gainteraptjav-0yj1077.slack.com/archives/D01P4DMPSA0/p1618437496009400">
+<img src="https://github.com/bortiznine/Social-Media-Project-API/blob/main/20210414_165730.jpg">
 <br>
 <h2 span style=color:goldenrod>Design Decisions</h2>
 <p>
@@ -119,5 +119,6 @@ Need to add Reactions and reset password for users. Having those to boot with wo
 Check how we can limit reaction amount per user on a given post. Try expanding backend to vue front and meet together to make a running full stack site. Updating branches for FrontEnd and master to allow front end use and to keep backend unaffected.
 
 4/14/21:
+Last minute testing
 
 </p>
