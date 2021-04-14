@@ -14,20 +14,21 @@ import java.util.List;
 public class Post {
 
     @Id
-@Column
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column
     private String username;
 
-@Column
+
+    @Column
     private String title;
 
-@Column
+    @Column
     private String content;
 
-@Column
+    @Column
     private Date date;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -39,7 +40,7 @@ private Long id;
     @JsonIgnore
     private Reactions reactions;
 
-@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
@@ -52,6 +53,7 @@ private Long id;
 
     public Post() {
     }
+
 
     public Post(Long id, String title, String content, Date date, String username) {
         this.id = id;
