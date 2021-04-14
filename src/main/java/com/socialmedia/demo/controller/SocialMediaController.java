@@ -105,7 +105,7 @@ public class SocialMediaController {
         return socialMediaService.deleteAllCommentsOnPost(postId);
     }
 
-    @PostMapping("/post/{postId}/reactions/{reaction}")
+    @PostMapping("/posts/{postId}/reactions/{reaction}")
     public Post postReactions(@PathVariable String reaction, @PathVariable Long postId){
         System.out.println("Calling postReaction");
         return socialMediaService.postReactions(reaction, postId);
