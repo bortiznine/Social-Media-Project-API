@@ -31,13 +31,13 @@ private Long id;
     private Date date;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="reactions_id", referencedColumnName="id")
-    private Reactions reactions;
+    @JoinColumn(name="reactions_count_id", referencedColumnName="id")
+    private ReactionsCount reactionsCount;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="all_reactions_id", referencedColumnName="id")
+    @JoinColumn(name="reactions_id", referencedColumnName="id")
     @JsonIgnore
-    private AllReactions allReactions;
+    private Reactions reactions;
 
 @ManyToOne
     @JoinColumn(name = "user_id")
@@ -117,6 +117,14 @@ private Long id;
         return username;
     }
 
+    public ReactionsCount getReactionsCount() {
+        return reactionsCount;
+    }
+
+    public void setReactionsCount(ReactionsCount reactionsCount) {
+        this.reactionsCount = reactionsCount;
+    }
+
     public Reactions getReactions() {
         return reactions;
     }
@@ -125,13 +133,6 @@ private Long id;
         this.reactions = reactions;
     }
 
-    public AllReactions getAllReactions() {
-        return allReactions;
-    }
-
-    public void setAllReactions(AllReactions allReactions) {
-        this.allReactions = allReactions;
-    }
 
     @Override
     public String toString() {

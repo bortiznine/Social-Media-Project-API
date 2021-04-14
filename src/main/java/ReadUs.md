@@ -41,7 +41,7 @@ columns for posts and comments were not organized to be user-friendly.
 
 4/13/21:
 REACTIONS WAS A COMPLICATED OBSERVATION! We spent about 3 hours trying to see how we can properly implement such a system for users to have. It's easy on idea but in execution we stumbled on meeting the right parameters.
-Seeing reactions work but with no restriction is something we would have to address next meet up.
+Seeing reactionsCount work but with no restriction is something we would have to address next meet up.
 </p>
 <br>
 <h2 span style="color: goldenrod">Challenges We Faced</h2>

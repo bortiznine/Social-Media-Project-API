@@ -2,16 +2,11 @@ package com.socialmedia.demo.controller;
 
 import com.socialmedia.demo.model.Post;
 import com.socialmedia.demo.model.Comment;
-import com.socialmedia.demo.model.Reactions;
-import com.socialmedia.demo.model.User;
 import com.socialmedia.demo.service.SocialMediaService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController

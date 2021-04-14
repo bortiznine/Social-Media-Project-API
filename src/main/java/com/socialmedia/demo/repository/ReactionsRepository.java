@@ -1,9 +1,8 @@
 package com.socialmedia.demo.repository;
 
-import com.socialmedia.demo.model.Reactions;
 import org.springframework.data.jpa.repository.JpaRepository;
+import com.socialmedia.demo.model.Reactions;
 
 public interface ReactionsRepository extends JpaRepository<Reactions, Long> {
-    Reactions findByIdAndPostId(Long Id, Long postId);
-    Reactions findByPostId(Long postId);
+    boolean existsByUserIdAndPostId(Long userId, Long postId);
 }

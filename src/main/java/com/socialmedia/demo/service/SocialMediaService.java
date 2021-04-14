@@ -3,14 +3,14 @@ package com.socialmedia.demo.service;
 import com.socialmedia.demo.exception.InformationExistException;
 import com.socialmedia.demo.exception.InformationNotFoundException;
 import com.socialmedia.demo.exception.ReactionInvalidException;
-import com.socialmedia.demo.model.AllReactions;
+import com.socialmedia.demo.model.Reactions;
 import com.socialmedia.demo.model.Post;
 import com.socialmedia.demo.model.Comment;
-import com.socialmedia.demo.model.Reactions;
+import com.socialmedia.demo.model.ReactionsCount;
 import com.socialmedia.demo.repository.CommentRepository;
 import com.socialmedia.demo.repository.PostRepository;
+import com.socialmedia.demo.repository.ReactionsCountRepository;
 import com.socialmedia.demo.repository.ReactionsRepository;
-import com.socialmedia.demo.repository.AllReactionsRepository;
 import com.socialmedia.demo.security.MyUserDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +30,10 @@ public class SocialMediaService {
     private CommentRepository commentRepository;
 
     @Autowired
-    private ReactionsRepository reactionsRepository;
+    private ReactionsCountRepository reactionsCountRepository;
 
     @Autowired
-    private AllReactionsRepository allReactionsRepository;
+    private ReactionsRepository reactionsRepository;
 
     @Autowired
     public void setSocialMediaRepository(PostRepository postRepository) {
@@ -65,9 +65,9 @@ public class SocialMediaService {
         if (post != null) {
             throw new InformationExistException("post with title " + post.getTitle() + " already exists");
         } else {
-            Reactions reactions = new Reactions();
-            reactions.setPost(postObject);
-            postObject.setReactions(reactions);
+            ReactionsCount reactionsCount = new ReactionsCount();
+            reactionsCount.setPost(postObject);
+            postObject.setReactionsCount(reactionsCount);
             postObject.setUsername(userDetails.getUser().getUsername());
             postObject.setUser(userDetails.getUser());
             postObject.setDate(new Date());
@@ -203,40 +203,42 @@ public class SocialMediaService {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         if (post.isPresent()) {
-            Reactions reactions = reactionsRepository.findByPostId(postId);
-            boolean alreadyReacted = allReactionsRepository.existsByUserIdAndPostId(userDetails.getUser().getId(), postId);
+            ReactionsCount reactionsCount = reactionsCountRepository.findByPostId(postId);
+            boolean alreadyReacted = reactionsRepository.existsByUserIdAndPostId(userDetails.getUser().getId(), postId);
             if (alreadyReacted) {
                 throw new InformationExistException("reaction of "+ reactionType + " cannot be added as there is another reaction submitted!");
             }
+            Reactions newReactions = new Reactions();
             switch (reactionType) {
                 case "like":
-                    Long likesCount = reactions.getLike();
+
+                    Long likesCount = reactionsCount.getLike();
                     likesCount++;
-                    reactions.setLike(likesCount);
-                    AllReactions newAllReactions = new AllReactions();
-                    newAllReactions.setUser(userDetails.getUser());
-                    newAllReactions.setPost(post.get());
-                    allReactionsRepository.save(newAllReactions);
+                    reactionsCount.setLike(likesCount);
+
                     break;
                  case "laugh":
-                    Long laughCount = reactions.getLaugh();
+                    Long laughCount = reactionsCount.getLaugh();
                     laughCount++;
-                    reactions.setLaugh(laughCount);
+                    reactionsCount.setLaugh(laughCount);
                     break;
                 case "angry":
-                    Long angryCount = reactions.getAngry();
+                    Long angryCount = reactionsCount.getAngry();
                     angryCount++;
-                    reactions.setAngry(angryCount);
+                    reactionsCount.setAngry(angryCount);
                     break;
                 case "sad":
-                    Long sadCount = reactions.getSad();
+                    Long sadCount = reactionsCount.getSad();
                     sadCount++;
-                    reactions.setSad(sadCount);
+                    reactionsCount.setSad(sadCount);
                     break;
                 default:
                     throw new ReactionInvalidException("User trying to submit a reaction cannot find " + reactionType + " reaction");
             }
-            reactionsRepository.save(reactions);
+            newReactions.setUser(userDetails.getUser());
+            newReactions.setPost(post.get());
+            reactionsRepository.save(newReactions);
+            reactionsCountRepository.save(reactionsCount);
            return post.get();
         } else {
             throw new InformationNotFoundException("Post with id " + postId + " not found");
