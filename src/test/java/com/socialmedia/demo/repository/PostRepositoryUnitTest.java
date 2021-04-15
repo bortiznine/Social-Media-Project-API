@@ -1,11 +1,6 @@
 package com.socialmedia.demo.repository;
 
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.socialmedia.demo.model.Post;
 import com.socialmedia.demo.model.User;
 import org.junit.jupiter.api.AfterEach;
