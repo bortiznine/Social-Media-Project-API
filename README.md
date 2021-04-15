@@ -2,7 +2,7 @@
 
 <h1 style=color:teal>Social Media</h1>
 <h2 style="color: darkgray">EndPoints</h2>
-<h3>
+<h4>
 
 | Request Type | URL| Request Body | Request Header |
 |--|--|--|--|
@@ -22,7 +22,7 @@
 | POST | /auth/users/login | LoginRequest loginRequestObject | none |
 | PUT | /auth/users/passwordreset | PasswordReset passwordResetObject | none|
 
-</h3>
+</h4>
 <h2 style="color: darkgray">Features</h2>
 <ul>
   <li>Able to Get Posts, Comments, Reactions and Username</li>
