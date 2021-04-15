@@ -1,37 +1,38 @@
 # Social-Media-Project
 
-<h1 span style=color:teal>Social Media</h1>
-<h2 span style="color: darkgray">EndPoints</h2>
+<h1 style=color:teal>Social Media</h1>
+<h2 style="color: darkgray">EndPoints</h2>
 <h3>
 
 | Request Type | URL| Request Body | Request Header |
 |--|--|--|--|
 | GET |  /api/posts| None | Authorization Bearer TOKEN|
-GET|/api/posts/{postId}|None |Authorization Bearer TOKEN|
-GET| /api/posts/{postId}/comments|None|Authorization Bearer TOKEN|
-POST| /api/posts | Post postObject|Authorization Bearer TOKEN|
-POST| /api/posts/{postId}/comments | Comment commentObject|Authorization Bearer TOKEN|
-POST| /api/posts/{postId}/reactions/{reaction} | none|Authorization Bearer TOKEN|
-PUT| /api/posts/{postId} | Post postObject|Authorization Bearer TOKEN|
-PUT| /posts/{postId}/comments/{commentId} | Comment commentObject|Authorization Bearer TOKEN|
-DELETE| /api/posts | none |Authorization Bearer TOKEN|
-DELETE| /api/posts/{postId} | none|Authorization Bearer TOKEN|
-DELETE| /api/posts/{postId}/comments/{commentId} | none|Authorization Bearer TOKEN|
-DELETE| /api/posts/{postId}/comments | none|Authorization Bearer TOKEN|
-POST | /auth/users/register | User userObject | none |
-POST | /auth/users/login | LoginRequest loginRequestObject | none |
-PUT | /auth/users/passwordreset | PasswordReset passwordResetObject | none|
+| GET|/api/posts/{postId}|None |Authorization Bearer TOKEN|
+| GET| /api/posts/{postId}/comments|None|Authorization Bearer TOKEN|
+| POST| /api/posts | Post postObject|Authorization Bearer TOKEN|
+| POST| /api/posts/{postId}/comments | Comment commentObject|Authorization Bearer TOKEN|
+| POST| /api/posts/{postId}/reactions/{reaction} | none|Authorization Bearer TOKEN|
+| PUT| /api/posts/{postId} | Post postObject|Authorization Bearer TOKEN|
+| PUT| /posts/{postId}/comments/{commentId} | Comment commentObject|Authorization Bearer TOKEN|
+| DELETE| /api/posts | none |Authorization Bearer TOKEN|
+| DELETE| /api/posts/{postId} | none|Authorization Bearer TOKEN|
+| DELETE| /api/posts/{postId}/comments/{commentId} | none|Authorization Bearer TOKEN|
+| DELETE| /api/posts/{postId}/comments | none|Authorization Bearer TOKEN|
+| POST | /auth/users/register | User userObject | none |
+| POST | /auth/users/login | LoginRequest loginRequestObject | none |
+| PUT | /auth/users/passwordreset | PasswordReset passwordResetObject | none|
 
 </h3>
-<h2 span style="color: darkgray">Features</h2>
+<h2 style="color: darkgray">Features</h2>
 <ul>
   <li>Able to Get Posts, Comments, Reactions and Username</li>
   <li>Able to create a user account with email and password with a profile picture</li>
   <li>Able to reset password for a user</li>
-  <li>Able to leave reactions on own and other users posts(Like, Laugh,Sad,Angry)</li>
-  <li> Able to edit Posts And Comments </li>
+  <li>Able to leave reactions (Like, Laugh,Sad,Angry) on your own and other users posts</li>
+  <li>Able to edit Posts And Comments </li>
   <li>Able to delete Posts and Comments</li>
-  <li>Built a Front End on a seperate Repository (https://github.com/bortiznine/SocialMediaProjectFrontEnd)</li>
+  <li>Built a Front End in Vue on a separate Repository (https://github.com/bortiznine/SocialMediaProjectFrontEnd). The FrontEndFinal branch of this repo is compatible with the Front End repo.</li>
+  <li>Unit tests are in the unit-tests branch of this repo</li>
   <li>Able to write a post that is max 1000 characters</li>
   
 </ul>
@@ -56,9 +57,12 @@ Created a whole new repo for the front named SOCAILMEDIAFRONTEND. had posts mvp 
 
 4/14/21:
 Added a limiter to reactions so users could not react more than once on any given post. Changed character length to 1000 for posts. Added Vue Front end to display backend content. 
+
+4/15/21:
+Added a couple of unit tests and smoke tests.
 </p>
 <br>
-<h2 span style=color:goldenrod>Reasons</h2>
+<h2 style=color:goldenrod>Reasons</h2>
 <p>
 4/11/21:
 To implement a proper bearer token authentication for our social media database. Also to ensure a secure access thru information to only those with usernames passwords and profiles.
@@ -72,16 +76,19 @@ If a user wanted to change a password they can now do so. Made sure to allow use
 
 4/14/21:
 Limiter ensured users couldn't react twice or more. Used a Vue front-end so we can view backend more easily. Vue also makes api more user-friendly.
+
+4/15/21:
+We included tests to ensure that certain methods are working properly.
 </p>
 <br>
-<h2 span style=color:red>What Went Wrong</h2>
+<h2 style=color:red>What Went Wrong</h2>
 <p>
 4/11/21:
 Cannot fully run the server as we have been getting (Unable to start embedded tomcat). We are still missing methods and callbacks to our service class but we hope to see something by end of session today.
 
 4/12/21:
 Initially Posts and comments were only seen and accessed to the original user. no other posts or comments were able to be displayed to interact with. Posts and comments were not displaying username effectively to the comments or posts shown (we could not know who was the submitter.)
-@requestbody was missing in a method for social-media controller causing us issues to display proper information.
+@Requestbody was missing in a method for social-media controller causing us issues to display proper information.
 columns for posts and comments were not organized to be user-friendly.
 
 4/13/21:
@@ -89,10 +96,13 @@ REACTIONS WAS A COMPLICATED OBSERVATION! We spent about 3 hours trying to see ho
 Seeing reactionsCount work but with no restriction is something we would have to address next meet up.
 
 4/14/21:
-We had wrong api url link for reacting to posts (post is what it was prior.) Spacing for title "TWOTTER" for front end was not vertically centered reviewed with Thiago on issue and was resolved.
+We had a misspelled api url link for reacting to posts ('post' is what it was prior). Spacing for title "TWOTTER" for front end was not vertically centered reviewed with Thiago on issue and was resolved.
+
+4/15/21:
+When doing unit tests on objects that were retrieved from a repository, their properities, specifically the date, would be formatted slightly differently. A JSON formatter helped with that.
 </p>
 <br>
-<h2 span style="color: goldenrod">Challenges We Faced</h2>
+<h2 style="color: goldenrod">Challenges We Faced</h2>
 <p>
 4/11/21:
 Reorganizing names of classes to unify order of structure for the project. Making sure we connect a Pgadmin database to the spring boot restAPI.
@@ -105,9 +115,10 @@ Figuring out how to not have users react more than once to a post. A solution mu
 
 4/14/21:
 Organizing and setting parameters for Vue front end. needed to get count of reactions displayed properly.
+
 </p>
 <br>
-<h2 span style="color: limegreen">What To Follow Up With Next Meet Up</h2>
+<h2 style="color: limegreen">What To Follow Up With Next Meet Up</h2>
 <p>
 4/11/21:
 Follow up with Suresh and or Marc regarding tomcat embedded issue. Make sure postman routes can be delivered appropriately.Comment entity for model.
