@@ -29,24 +29,10 @@ public class User {
     @Column
     private String picture;
 
-    // one user can have only one profile
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name="profile_id", referencedColumnName="id")
-//    private UserProfile userProfile;
-
-//    public UserProfile getUserProfile() {
-//        return userProfile;
-//    }
-//
-//    public void setUserProfile(UserProfile userProfile) {
-//        this.userProfile = userProfile;
-//    }
-
     public User() {
     }
 
-    public User(Long id, String username, String emailAddress, String password, String picture) {
-        this.id = id;
+    public User(String username, String emailAddress, String password, String picture) {
         this.username = username;
         this.emailAddress = emailAddress;
         this.password = password;
