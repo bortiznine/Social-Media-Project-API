@@ -116,6 +116,9 @@ Figuring out how to not have users react more than once to a post. A solution mu
 4/14/21:
 Organizing and setting parameters for Vue front end. needed to get count of reactions displayed properly.
 
+4/15/21:
+Researching how to mock up unit tests in Springboot because there are a lot more 'active' parts than simple JUnit tests.
+
 </p>
 <br>
 <h2 style="color: limegreen">What To Follow Up With Next Meet Up</h2>
@@ -131,5 +134,8 @@ Check how we can limit reaction amount per user on a given post. Try expanding b
 
 4/14/21:
 Last minute testing
+
+4/15/21:
+Project is complete.
 
 </p>
