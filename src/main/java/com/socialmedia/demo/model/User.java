@@ -45,7 +45,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String username, String emailAddress, String password, String profile) {
+    public User(Long id, String username, String emailAddress, String password, String picture) {
         this.id = id;
         this.username = username;
         this.emailAddress = emailAddress;

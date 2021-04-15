@@ -20,8 +20,13 @@ public class SocialMediaController {
         this.socialMediaService = socialMediaService;
     }
 
-    @GetMapping("/helloworld")
-    public String helloWorld() {
+    @GetMapping("/public/helloworld")
+    public String helloWorldPublic() {
+        return "Hello world";
+    }
+
+    @GetMapping("/private/helloworld")
+    public String helloWorldPrivate() {
         return "Hello world";
     }
 
