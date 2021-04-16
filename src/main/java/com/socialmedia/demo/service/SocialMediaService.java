@@ -96,7 +96,7 @@ public class SocialMediaService {
     public ResponseEntity<?> deleteSinglePost(Long postId) {
         System.out.println("service calling deleteSinglePost ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = postRepository.findByIdAndUserId(userDetails.getUser().getId(), postId);
+        Post post = postRepository.findByIdAndUserId(postId, userDetails.getUser().getId());
         if (post != null) {
             postRepository.deleteById(postId);
             HashMap<String, String> responseMessage = new HashMap<>();
