@@ -68,13 +68,3 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     }
 }
 
-@Configuration
-class CorsConfiguration implements WebMvcConfigurer {
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS");
-    }
-}
